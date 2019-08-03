@@ -17,7 +17,7 @@ function RegisterForm({ form }) {
         e.preventDefault();
         form.validateFieldsAndScroll((err, values) => {
             if (!err) {
-                dispatch({ type: "LOGIN_REQUEST", values });
+                dispatch({ type: "STORE_USER", values });
             }
         });
     };
@@ -29,7 +29,7 @@ function RegisterForm({ form }) {
 
     const compareToFirstPassword = (rule, value, callback) => {
         if (value && value !== form.getFieldValue("password")) {
-            callback("Two passwords that you enter is inconsistent!");
+            callback(t("signup.noMatch"));
         } else {
             callback();
         }
@@ -115,7 +115,7 @@ function RegisterForm({ form }) {
                     })(<Input.Password autoComplete="new-password" />)}
                 </Form.Item>
                 <Form.Item label={t("general.passwordConf")} hasFeedback>
-                    {getFieldDecorator("confirm", {
+                    {getFieldDecorator("password_confirmation", {
                         rules: [
                             {
                                 required: true,
