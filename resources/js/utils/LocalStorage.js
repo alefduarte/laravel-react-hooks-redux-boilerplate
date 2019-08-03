@@ -13,7 +13,7 @@ const LocalStorage = {
 
     setItem: (keyName, keyValue) => {
         try {
-            localStorage.setItem(keyName, keyValue);
+            localStorage.setItem(keyName, JSON.stringify(keyValue));
             return true;
         } catch (error) {
             return undefined;
