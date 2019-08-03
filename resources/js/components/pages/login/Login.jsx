@@ -18,11 +18,11 @@ function LoginPage({ form }) {
         form.setFields({
             password: {
                 value: values.password,
-                errors: [new Error("Invalid username or password")]
+                errors: [new Error(t("login.invalid"))]
             },
             email: {
                 value: values.email,
-                errors: [new Error("Invalid username or password")]
+                errors: [new Error(t("login.invalid"))]
             }
         });
     };
