@@ -13,15 +13,20 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::group([
-    'prefix' => 'auth'
-], function () {
-    Route::post('login', 'AuthController@login');
-    Route::post('signup', 'AuthController@signup');
+Route::group(['prefix' => 'users'], function () {
+    Route::post('signup', 'UserController@store');
 
-    Route::group([
-        'middleware' => 'auth:api'
-    ], function () {
+    Route::group(['middleware' => 'auth:api'], function () {
+        Route::get('index', 'UserController@index');
+        Route::get('show', 'UserController@show');
+        Route::post('update', 'UserController@update');
+    });
+});
+
+Route::group(['prefix' => 'auth'], function () {
+    Route::post('login', 'AuthController@login');
+
+    Route::group(['middleware' => 'auth:api'], function () {
         Route::get('logout', 'AuthController@logout');
         Route::get('user', 'AuthController@user');
     });
