@@ -18,7 +18,8 @@
         "noPasswordConf": "Confirme a senha!",
         "noEmail": "Insira um e-mail!",
         "invalidEmail": "E-mail inválido!",
-        "noName": "Insira um nome!"
+        "noName": "Insira um nome!",
+        "noMatch": "As senhas não coincidem!"
     },
     "login": {
         "noUsername": "Insira um nome de usuário",
@@ -26,7 +27,8 @@
         "remember": "Lembrar",
         "forgotPassword": "Esqueci minha senha",
         "or": "ou",
-        "register": "registrar agora!"
+        "register": "registrar agora!",
+        "invalid": "Usuário ou senha inválidos!"
     },
     "landingPage": {
         "notLoggedIn": "Esta é sua Home Page<br/>Você não está logado!"

@@ -18,7 +18,8 @@
         "noPasswordConf": "Please confirm your password!",
         "noEmail": "Please input your E-mail!",
         "invalidEmail": "The input is not valid E-mail!",
-        "noName": "Please input your name!"
+        "noName": "Please input your name!",
+        "noMatch": "Password do not match!"
     },
     "login": {
         "noUsername": "Please input your username!",
@@ -26,7 +27,8 @@
         "remember": "Remember me",
         "forgotPassword": "Forgot password",
         "or": "or",
-        "register": "register now!"
+        "register": "register now!",
+        "invalid": "Invalid username or password!"
     },
     "landingPage": {
         "notLoggedIn": "This is your Home Screen<br/>You are not logged in!"
