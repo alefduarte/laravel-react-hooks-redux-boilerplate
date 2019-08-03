@@ -1,0 +1,202 @@
+@import url(https://fonts.googleapis.com/css?family=Nunito);/* ************************************************************************* */
+
+/* -------------------------- TABLE OF CONTENTS ---------------------------- */
+
+/* ------------------------------- 0. MISC --------------------------------- */
+
+/* ------------------------------- 1. MAIN --------------------------------- */
+
+/* ------------------------------- 2. FOOTER ------------------------------- */
+
+/* ------------------------------- 3. NAVBAR ------------------------------- */
+
+/* ------------------------------- 4. LOGIN -------------------------------- */
+
+/* ------------------------------- 5. SIGNUP ------------------------------- */
+
+/* ************************************************************************* */
+
+/* ------------------------------------------------------------------------- */
+
+/* ************************************************************************* */
+
+/* ------------------------------- 1. MISC --------------------------------- */
+
+/* ************************************************************************* */
+
+.pulseIcon .ant-result-icon:before {
+  content: "";
+  position: absolute;
+  width: 72px;
+  height: 72px;
+  border: 2px solid #52c41a;
+  border-radius: 100%;
+  -webkit-animation: pulse 3s linear infinite;
+  animation: pulse 3s linear infinite;
+}
+
+.pulseIcon .ant-result-icon img {
+  width: 120px;
+  height: 120px;
+  border-radius: 100%;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.2);
+  }
+}
+
+@-webkit-keyframes pulse {
+  0% {
+    opacity: 0;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.4);
+  }
+}
+
+/* ************************************************************************* */
+
+/* ------------------------------- 1. MAIN --------------------------------- */
+
+/* ************************************************************************* */
+
+.main-layout {
+  background: #fff;
+  padding: 0;
+  min-height: calc(100vh - 135px);
+}
+
+/* ************************************************************************* */
+
+/* ------------------------------- 2. FOOTER ------------------------------- */
+
+/* ************************************************************************* */
+
+.footer {
+  width: 100%;
+  background-color: #f0f2f5;
+  min-height: 30px;
+  padding: 10px 0px 0px 0px;
+  bottom: 0px;
+}
+
+.copyright {
+  color: #000000;
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 10px;
+}
+
+/* ************************************************************************* */
+
+/* ------------------------------- 3. NAVBAR ------------------------------- */
+
+/* ************************************************************************* */
+
+.header {
+  position: relative;
+  background: #fff !important;
+  padding: 0;
+  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+  z-index: 2;
+}
+
+.header-menu-button {
+  cursor: pointer;
+  height: 100%;
+  display: inline-block;
+  transition: all 0.3s;
+  padding: 0px 12px;
+  color: #708090;
+  vertical-align: middle;
+}
+
+.header-menu-button:hover {
+  background-color: rgba(0, 0, 0, 0.025);
+}
+
+.header-menu-button p {
+  display: inline;
+  font-size: medium;
+  vertical-align: middle;
+  margin: 0px 5px;
+}
+
+.header-menu-button a {
+  padding: 0px 12px;
+  color: #708090;
+  vertical-align: middle;
+}
+
+.header-container {
+  float: right;
+  height: 100%;
+  padding: 0px 15px;
+}
+
+.header-home-button {
+  margin: 0px 25px;
+  width: 60px;
+  font-size: 1.5em;
+}
+
+.header-username {
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline-block !important;
+}
+
+/* ************************************************************************* */
+
+/* ------------------------------- 4. LOGIN -------------------------------- */
+
+/* ************************************************************************* */
+
+.login-form {
+  max-width: 300px;
+  margin: auto;
+}
+
+.login-form-forgot {
+  float: right;
+}
+
+.login-form-button {
+  width: 100%;
+}
+
+/* ************************************************************************* */
+
+/* ------------------------------- 5. SIGNUP ------------------------------- */
+
+/* ************************************************************************* */
+
+.signup-form {
+  max-width: 800px;
+  padding: 20px;
+}
+

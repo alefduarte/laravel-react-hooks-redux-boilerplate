@@ -1,0 +1,15 @@
+{
+    "plugins": [
+        [
+            "module-resolver",
+            {
+                "root": ["./"],
+                "alias": {
+                    "@pages": "./resources/js/components/pages/",
+                    "@common": "./resources/js/components/common/",
+                    "@ducks": "./resources/js/store/ducks/"
+                }
+            }
+        ]
+    ]
+}

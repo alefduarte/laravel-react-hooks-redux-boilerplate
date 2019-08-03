@@ -1,0 +1,37 @@
+{
+    "navbar": {
+        "profile": "Profile",
+        "settings": "Settings",
+        "logout": "Log out"
+    },
+    "general": {
+        "login": "Log in",
+        "LOGIN": "LOGIN",
+        "signup": "Sign up",
+        "password": "Password",
+        "username": "Username",
+        "SIGNUP": "SIGNUP",
+        "name": "Name",
+        "passwordConf": "Confirm Password"
+    },
+    "signup": {
+        "noPasswordConf": "Please confirm your password!",
+        "noEmail": "Please input your E-mail!",
+        "invalidEmail": "The input is not valid E-mail!",
+        "noName": "Please input your name!"
+    },
+    "login": {
+        "noUsername": "Please input your username!",
+        "noPassword": "Please input your Password!",
+        "remember": "Remember me",
+        "forgotPassword": "Forgot password",
+        "or": "or",
+        "register": "register now!"
+    },
+    "landingPage": {
+        "notLoggedIn": "This is your Home Screen<br/>You are not logged in!"
+    },
+    "homePage": {
+        "loggedIn": "This is your Home Screen<br/>You are logged in as {{name}}!"
+    }
+}

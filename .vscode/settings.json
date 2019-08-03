@@ -1,0 +1,11 @@
+{
+    "eslint.validate": [
+        "javascript",
+        {
+            "autoFix": true,
+            "language": "react"
+        },
+        "javascriptreact"
+    ],
+    "eslint.packageManager": "yarn"
+}

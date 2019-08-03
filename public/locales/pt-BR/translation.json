@@ -1,0 +1,37 @@
+{
+    "navbar": {
+        "profile": "Perfil",
+        "settings": "Configurações",
+        "logout": "Sair"
+    },
+    "general": {
+        "login": "Entrar",
+        "LOGIN": "ENTRAR",
+        "signup": "Registrar",
+        "password": "Senha",
+        "username": "Usuário",
+        "SIGNUP": "REGISTRAR",
+        "name": "Nome",
+        "passwordConf": "Confirmar Senha"
+    },
+    "signup": {
+        "noPasswordConf": "Confirme a senha!",
+        "noEmail": "Insira um e-mail!",
+        "invalidEmail": "E-mail inválido!",
+        "noName": "Insira um nome!"
+    },
+    "login": {
+        "noUsername": "Insira um nome de usuário",
+        "noPassword": "Insira uma senha",
+        "remember": "Lembrar",
+        "forgotPassword": "Esqueci minha senha",
+        "or": "ou",
+        "register": "registrar agora!"
+    },
+    "landingPage": {
+        "notLoggedIn": "Esta é sua Home Page<br/>Você não está logado!"
+    },
+    "homePage": {
+        "loggedIn": "Esta é sua Home Page<br/>Você está logado como {{name}}!"
+    }
+}
