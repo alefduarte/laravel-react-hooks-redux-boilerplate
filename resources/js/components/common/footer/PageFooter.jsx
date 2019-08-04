@@ -8,7 +8,14 @@ const PageFooter = () => {
         <Footer className="footer">
             <div className="copyright">
                 <strong>
-                    Copyright &copy; {new Date().getFullYear()} | ÁLEF DUARTE
+                    Copyright &copy; {new Date().getFullYear()} |{" "}
+                    <a
+                        href="https://github.com/alefduarte"
+                        target="_blank"
+                        rel="noopener noreferrer nofollow"
+                    >
+                        ÁLEF DUARTE
+                    </a>
                 </strong>
             </div>
         </Footer>
