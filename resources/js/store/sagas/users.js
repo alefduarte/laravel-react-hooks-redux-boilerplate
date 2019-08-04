@@ -1,7 +1,5 @@
 import { put, call } from 'redux-saga/effects';
-import { Creators } from '../ducks/alerts';
-import { Creators as ActionNotification } from '../ducks/notifications';
-import { getFormData } from '../../helpers';
+import { Creators } from '../ducks/users';
 
 import { Api } from '../../services/Api';
 
@@ -15,41 +13,35 @@ export function* indexUsers() {
             yield put(Creators.indexAlertsSuccess(response.data));
         }
         else {
-            yield put(ActionNotification.dangerMessage('Falha ao processar requisição.'))
+            yield put(Creators.failure('Falha ao processar requisição.'))
         }
 
     } catch (error) {
-        yield put(ActionNotification.dangerMessage('Falha ao carregar alertas.'));
         yield put(Creators.failure(error.toString()));
     }
 }
 
-export function* storeUsers(action) {
+/* eslint camelcase: ["error", {ignoreDestructuring: true, allow: ["password_confirmation"]}] */
+export function* storeUsers({ values: { email, password, name, password_confirmation } }) {
     try {
-        const formData = yield call(() => {
-            return getFormData(action.alert)
-        });
-
         const response = yield call(() => {
-            return Api.post('/users', formData);
+            return Api.post('/users/signup', { email, password, name, password_confirmation });
         });
 
-        yield put(Creators.storeAlertSuccess(response.data));
-        yield put(ActionNotification.successMessage('Alerta criado com sucesso.'))
+        yield put(Creators.storeUserSuccess(response.data));
     } catch (error) {
-        yield put(ActionNotification.dangerMessage('Falha ao criar alerta.'));
         yield put(Creators.failure(error.toString()));
     }
 }
 
-export function* destroyAlert(action) {
+export function* destroyUsers(action) {
     try {
         yield call(() => {
             return Api.delete('/users', action.data);
         });
 
-        yield put(ActionNotification.successMessage('Alerta removido com sucesso.'));
+        yield put(Creators.destroyUserSuccess('Usuário removido com sucesso.'));
     } catch (error) {
-        yield put(ActionNotification.dangerMessage('Falha ao remover alerta.'));
+        yield put(Creators.failure('Falha ao remover usuário.'));
     }
 }
