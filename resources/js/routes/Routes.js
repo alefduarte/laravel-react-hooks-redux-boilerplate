@@ -7,7 +7,7 @@ import {
 import PublicRoute from './PublicRoute';
 import PrivateRoute from './PrivateRoute';
 import history from './history'
-import { Login, Register, Logout, NotFound, LandingPage, HomePage } from '@pages';
+import { Login, Register, Logout, NotFound, LandingPage, HomePage, Dashboard } from '@pages';
 
 const Routes = () => (
     <Router history={history}>
@@ -17,6 +17,7 @@ const Routes = () => (
             <PrivateRoute component={Logout} path="/logout" exact />
             <PublicRoute restricted component={Register} path="/register" exact />
             <PrivateRoute component={HomePage} path="/home" exact />
+            <PrivateRoute component={Dashboard} path="/dashboard" exact />
             <Route component={NotFound} />
         </Switch>
     </Router>
