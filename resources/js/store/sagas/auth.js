@@ -1,4 +1,5 @@
 import { put, call } from 'redux-saga/effects';
+import history from "@routes/history";
 import { login, getUser, refreshToken, logout } from '../../services';
 import { Creators } from '../ducks/auth';
 import { LocalStorage } from '../../utils';
@@ -14,11 +15,11 @@ export function* loginRequest({ values: { email, password, remember_me } }) {
 
     yield put(Creators.loginSuccess(user.data));
 
-    // Redireciona para o painel administrativo.
-    yield global.history.push('/admin/overview');
+    yield user.data.type === 'admin' ? history.push('/dasboard') : history.push('/home');
+
   } catch (error) {
     if (error.response.status === 401) {
-      yield put(Creators.loginFailure('Usuário ou senha inválidos.'));
+      yield put(Creators.loginFailure('Invalid username or password!'));
     } else {
       yield put(Creators.loginFailure(error.toString()));
     }
