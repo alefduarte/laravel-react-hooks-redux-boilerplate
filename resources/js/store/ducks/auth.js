@@ -55,5 +55,7 @@ export default createReducer(INITIAL_STATE, {
 
 /* ---------------------- Selectors --------------------- */
 
-export const isLoggedIn = state => !!state.user;
+// export const isLoggedIn = state => !!state.user;
+export const isLoggedIn = state => !!state.auth.user;
 export const isError = state => !!state.error;
+export const isAdmin = state => state.auth.user.type === "admin";
