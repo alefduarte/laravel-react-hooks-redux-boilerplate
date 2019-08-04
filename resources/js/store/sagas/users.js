@@ -1,7 +1,7 @@
 import { put, call } from 'redux-saga/effects';
 import { Creators } from '../ducks/users';
 
-import { Api } from '../../services/Api';
+import { Api } from '../../services';
 
 export function* indexUsers() {
     try {
@@ -10,7 +10,7 @@ export function* indexUsers() {
         });
 
         if (response.status === 200) {
-            yield put(Creators.indexAlertsSuccess(response.data));
+            yield put(Creators.indexUsersSuccess(response.data));
         }
         else {
             yield put(Creators.failure('Falha ao processar requisição.'))
