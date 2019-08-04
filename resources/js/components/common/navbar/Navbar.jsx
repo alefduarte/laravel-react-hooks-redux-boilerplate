@@ -11,7 +11,7 @@ const { Header } = Layout;
 function Navbar() {
     const { t, i18n } = useTranslation();
     const isAuthenticated = useSelector(state => isLoggedIn(state));
-    const user = useSelector(state => state.user);
+    const user = useSelector(state => state.auth.user);
 
     const changeLanguage = lng => {
         i18n.changeLanguage(lng);
