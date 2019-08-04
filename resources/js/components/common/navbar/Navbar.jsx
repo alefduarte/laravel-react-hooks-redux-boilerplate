@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Menu, Dropdown, Icon, Avatar, Button, Tooltip, Layout } from "antd";
-import { isLoggedIn } from "@ducks/auth";
+import { isLoggedIn, isAdmin } from "@ducks/auth";
 import history from "@routes/history";
 
 const { Header } = Layout;
@@ -11,7 +11,10 @@ const { Header } = Layout;
 function Navbar() {
     const { t, i18n } = useTranslation();
     const isAuthenticated = useSelector(state => isLoggedIn(state));
-    const user = useSelector(state => state.auth.user);
+    const isAdminUser = useSelector(state => isAdmin(state));
+    const username = useSelector(state =>
+        state.auth.user ? state.auth.user.name : ""
+    );
 
     const changeLanguage = lng => {
         i18n.changeLanguage(lng);
@@ -49,86 +52,99 @@ function Navbar() {
 
     return (
         <Header className="header">
-            {isAuthenticated ? (
-                <div style={{ height: "100%" }}>
-                    <div className="header-container">
-                        <Tooltip title="Ajuda">
+            <div style={{ height: "100%", float: "left" }}>
+                <Button
+                    type="link"
+                    className="header-menu-button"
+                    onClick={() => history.push("/")}
+                >
+                    Boilerplate
+                </Button>
+                <Button
+                    className="header-menu-button"
+                    size="large"
+                    type="link"
+                    icon="home"
+                    aria-label="start"
+                    style={{ width: "50px" }}
+                    onClick={() =>
+                        isAdminUser
+                            ? history.push("/dashboard")
+                            : history.push("/home")
+                    }
+                />
+            </div>
+            <div style={{ height: "100%" }}>
+                <div className="header-container">
+                    {isAuthenticated ? (
+                        <>
+                            <Tooltip title="Ajuda">
+                                <Button
+                                    className="header-menu-button"
+                                    size="large"
+                                    type="link"
+                                    icon="question-circle"
+                                />
+                            </Tooltip>
                             <Button
                                 className="header-menu-button"
                                 size="large"
                                 type="link"
-                                icon="question-circle"
+                                icon="bell"
                             />
-                        </Tooltip>
-                        <Button
-                            className="header-menu-button"
-                            size="large"
-                            type="link"
-                            icon="bell"
-                        />
-                        <Dropdown overlay={menu}>
-                            <span
-                                key={user.name}
-                                className="header-menu-button"
-                            >
-                                <Avatar
-                                    style={{
-                                        backgroundColor: "rgb(24, 110, 197)",
-                                        verticalAlign: "middle"
-                                    }}
-                                    size="small"
+                            <Dropdown overlay={menu}>
+                                <span
+                                    key={username}
+                                    className="header-menu-button"
                                 >
-                                    User
-                                </Avatar>
-                                <p className="header-username">{user.name}</p>
-                                <Icon type="down" />
-                            </span>
-                        </Dropdown>
-                    </div>
-                </div>
-            ) : (
-                <div style={{ height: "100%" }}>
-                    <div style={{ height: "100%", float: "left" }}>
+                                    <Avatar
+                                        style={{
+                                            backgroundColor:
+                                                "rgb(24, 110, 197)",
+                                            verticalAlign: "middle"
+                                        }}
+                                        size="small"
+                                    >
+                                        User
+                                    </Avatar>
+                                    <p className="header-username">
+                                        {username}
+                                    </p>
+                                    <Icon type="down" />
+                                </span>
+                            </Dropdown>
+                        </>
+                    ) : (
+                        <>
+                            <Button
+                                className="header-menu-button"
+                                type="link"
+                                icon="login"
+                                onClick={() => history.push("/login")}
+                            >
+                                {t("general.login")}
+                            </Button>
+                            <Button
+                                className="header-menu-button"
+                                type="link"
+                                icon="user-add"
+                                onClick={() => history.push("/register")}
+                            >
+                                {t("general.signup")}
+                            </Button>
+                        </>
+                    )}
+                    <Dropdown overlay={languageMenu} trigger={["click"]}>
                         <Button
                             className="header-menu-button"
                             size="large"
                             type="link"
-                            icon="home"
+                            icon="global"
                             aria-label="home"
-                            style={{ margin: "0px 15px", width: "60px" }}
-                            onClick={() => history.push("/")}
                         />
-                    </div>
-                    <div className="header-container">
-                        <Button
-                            className="header-menu-button"
-                            type="link"
-                            icon="login"
-                            onClick={() => history.push("/login")}
-                        >
-                            {t("general.login")}
-                        </Button>
-                        <Button
-                            className="header-menu-button"
-                            type="link"
-                            icon="user-add"
-                            onClick={() => history.push("/register")}
-                        >
-                            {t("general.signup")}
-                        </Button>
-                        <Dropdown overlay={languageMenu} trigger={["click"]}>
-                            <Button
-                                className="header-menu-button"
-                                size="large"
-                                type="link"
-                                icon="global"
-                                aria-label="home"
-                                style={{ margin: "0px 5px" }}
-                            />
-                        </Dropdown>
-                    </div>
+                    </Dropdown>
                 </div>
-            )}
+            </div>
         </Header>
     );
 }
