@@ -34,7 +34,7 @@ export function* refreshTokenRequest() {
     const token = yield call(() => refreshToken(refresh_token));
     yield LocalStorage.setItem('token', token.data);
   } catch (error) {
-    yield global.history.push('/login');
+    yield history.push('/login');
 
     if (error.response.status === 401) {
       yield put(Creators.loginFailure('Sessão expirada faça o login novamente.'));
@@ -53,5 +53,5 @@ export function* logoutRequest() {
   yield call(() => LocalStorage.clear());
 
   // Redireciona pra a pagina de login.
-  yield global.history.push('/login');
+  yield history.push('/login');
 }

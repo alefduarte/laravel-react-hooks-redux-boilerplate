@@ -1,13 +1,14 @@
 import { useEffect } from "react";
-import { withRouter } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
-function LogoutPage(props) {
+function LogoutPage() {
+    const dispatch = useDispatch();
+
     useEffect(() => {
-        // this.props.dispatch(actions.authLogout());
-        props.history.push("/");
+        dispatch({ type: "LOGOUT_REQUEST" });
     }, []);
 
     return null;
 }
 
-export default withRouter(LogoutPage);
+export default LogoutPage;

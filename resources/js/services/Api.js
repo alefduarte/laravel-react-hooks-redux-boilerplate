@@ -51,7 +51,7 @@ export const login = (username, password, remember_me) => axios({
 // Faz logout no sistema e revoga o token do usuário.
 export const logout = () => axios({
     method: 'GET',
-    url: `${MIX_API_URL}/logout`,
+    url: `${MIX_API_URL}/auth/logout`,
     headers: getHeaderAuthorization(),
 });
 
