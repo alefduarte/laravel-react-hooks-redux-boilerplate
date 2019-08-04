@@ -81,7 +81,7 @@ export const refreshToken = refresh_token => axios({
 // Busca o usuário logado.
 export const getUser = () => axios({
     method: 'GET',
-    url: `${MIX_API_URL}/user`,
+    url: `${MIX_API_URL}/auth/user`,
     headers: getHeaderAuthorization(),
 });
 
