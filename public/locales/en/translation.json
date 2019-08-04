@@ -2,7 +2,8 @@
     "navbar": {
         "profile": "Profile",
         "settings": "Settings",
-        "logout": "Log out"
+        "logout": "Log out",
+        "language": "Language"
     },
     "general": {
         "login": "Log in",
@@ -31,9 +32,14 @@
         "invalid": "Invalid username or password!"
     },
     "landingPage": {
-        "notLoggedIn": "This is your Home Screen<br/>You are not logged in!"
+        "welcome": "This is the Main Screen",
+        "notLoggedIn": "You are not logged in!",
+        "loggedIn": "You are logged in as {{name}}!"
     },
     "homePage": {
         "loggedIn": "This is your Home Screen<br/>You are logged in as {{name}}!"
+    },
+    "dashPage": {
+        "loggedIn": "This is your Admin Screen<br/>You are logged in as {{name}}!"
     }
 }

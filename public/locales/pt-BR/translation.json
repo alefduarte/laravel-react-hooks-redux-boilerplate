@@ -2,7 +2,8 @@
     "navbar": {
         "profile": "Perfil",
         "settings": "Configurações",
-        "logout": "Sair"
+        "logout": "Sair",
+        "language": "Idioma"
     },
     "general": {
         "login": "Entrar",
@@ -31,9 +32,14 @@
         "invalid": "Usuário ou senha inválidos!"
     },
     "landingPage": {
-        "notLoggedIn": "Esta é sua Home Page<br/>Você não está logado!"
+        "welcome": "Esta é a Página Inicial",
+        "notLoggedIn": "Você não está logado!",
+        "loggedIn": "Você está logado como {{name}}!"
     },
     "homePage": {
         "loggedIn": "Esta é sua Home Page<br/>Você está logado como {{name}}!"
+    },
+    "dashPage": {
+        "loggedIn": "Esta é sua Admin Page<br/>Você está logado como {{name}}!"
     }
 }
