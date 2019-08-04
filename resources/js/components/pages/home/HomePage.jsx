@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 
 const HomePage = () => {
     const { t } = useTranslation();
-    const user = useSelector(state => state.user);
+    const user = useSelector(state => state.auth.user);
     return (
         <Result
             className="pulseIcon"
@@ -18,7 +18,10 @@ const HomePage = () => {
             }
             title={
                 <>
-                    <Trans i18nKey="homePage.loggedIn" name={user.name}>
+                    <Trans
+                        i18nKey="homePage.loggedIn"
+                        values={{ name: user.name }}
+                    >
                         {t("homePage.loggedIn")}
                     </Trans>
                     <Icon
