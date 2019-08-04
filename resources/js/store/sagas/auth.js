@@ -15,7 +15,7 @@ export function* loginRequest({ values: { email, password, remember_me } }) {
 
     yield put(Creators.loginSuccess(user.data));
 
-    yield user.data.type === 'admin' ? history.push('/dasboard') : history.push('/home');
+    yield user.data.type === 'admin' ? history.push('/dashboard') : history.push('/home');
 
   } catch (error) {
     if (error.response.status === 401) {
