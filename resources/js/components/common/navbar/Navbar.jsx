@@ -2,8 +2,9 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { isLoggedIn } from "@ducks/auth";
 import { Menu, Dropdown, Icon, Avatar, Button, Tooltip, Layout } from "antd";
+import { isLoggedIn } from "@ducks/auth";
+import history from "@routes/history";
 
 const { Header } = Layout;
 
@@ -88,36 +89,33 @@ function Navbar() {
             ) : (
                 <div style={{ height: "100%" }}>
                     <div style={{ height: "100%", float: "left" }}>
-                        <Link to="/" replace>
-                            <Button
-                                className="header-menu-button"
-                                size="large"
-                                type="link"
-                                icon="home"
-                                aria-label="home"
-                                style={{ margin: "0px 15px", width: "60px" }}
-                            />
-                        </Link>
+                        <Button
+                            className="header-menu-button"
+                            size="large"
+                            type="link"
+                            icon="home"
+                            aria-label="home"
+                            style={{ margin: "0px 15px", width: "60px" }}
+                            onClick={() => history.push("/")}
+                        />
                     </div>
                     <div className="header-container">
-                        <Link to="/login" replace>
-                            <Button
-                                className="header-menu-button"
-                                type="link"
-                                icon="login"
-                            >
-                                {t("general.login")}
-                            </Button>
-                        </Link>
-                        <Link to="/register" replace>
-                            <Button
-                                className="header-menu-button"
-                                type="link"
-                                icon="user-add"
-                            >
-                                {t("general.signup")}
-                            </Button>
-                        </Link>
+                        <Button
+                            className="header-menu-button"
+                            type="link"
+                            icon="login"
+                            onClick={() => history.push("/login")}
+                        >
+                            {t("general.login")}
+                        </Button>
+                        <Button
+                            className="header-menu-button"
+                            type="link"
+                            icon="user-add"
+                            onClick={() => history.push("/register")}
+                        >
+                            {t("general.signup")}
+                        </Button>
                         <Dropdown overlay={languageMenu} trigger={["click"]}>
                             <Button
                                 className="header-menu-button"
