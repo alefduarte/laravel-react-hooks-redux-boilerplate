@@ -1,17 +1,16 @@
 import React from 'react'
 import {
-    BrowserRouter as Router,
+    Router,
     Switch,
     Route
 } from 'react-router-dom'
 import PublicRoute from './PublicRoute';
 import PrivateRoute from './PrivateRoute';
+import history from './history'
 import { Login, Register, Logout, NotFound, LandingPage, HomePage } from '@pages';
 
-
-
 const Routes = () => (
-    <Router>
+    <Router history={history}>
         <Switch>
             <PublicRoute restricted={false} component={LandingPage} path="/" exact />
             <PublicRoute restricted component={Login} path="/login" exact />
