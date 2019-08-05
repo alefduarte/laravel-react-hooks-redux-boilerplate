@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Form, Icon, Input, Button, Checkbox, Layout, Typography } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { isError } from "@ducks/auth";
+import { isError, Types } from "@ducks/auth";
 
 const { Content } = Layout;
 const { Title } = Typography;
@@ -13,19 +13,20 @@ function LoginPage({ form }) {
     const { t } = useTranslation();
     const { getFieldDecorator } = form;
     const dispatch = useDispatch();
-    const auth = useSelector(state => state.auth);
+    const isFetching = useSelector(state => state.auth.fetching);
     const error = useSelector(state => isError(state));
-    const [fieldValues, setFieldValues] = useState("");
+    const [currentEmail, setEmail] = useState("");
+    const [currentPassword, setPassword] = useState("");
 
     useEffect(() => {
         function handleError() {
             form.setFields({
                 password: {
-                    value: fieldValues.password,
+                    value: currentPassword,
                     errors: [new Error(t("login.invalid"))]
                 },
                 email: {
-                    value: fieldValues.email,
+                    value: currentEmail,
                     errors: [new Error(t("login.invalid"))]
                 }
             });
@@ -35,9 +36,11 @@ function LoginPage({ form }) {
         }
     }, [error]);
 
-    const submit = values => {
-        dispatch({ type: "LOGIN_REQUEST", values });
-        setFieldValues(values);
+    /* eslint camelcase: ["error", {ignoreDestructuring: true, allow: ["remember_me"]}] */
+    const submit = ({ email, password, remember_me }) => {
+        dispatch({ type: Types.LOGIN_REQUEST, email, password, remember_me });
+        setEmail(email);
+        setPassword(password);
     };
 
     const handleSubmit = e => {
@@ -111,7 +114,7 @@ function LoginPage({ form }) {
                         type="primary"
                         htmlType="submit"
                         className="login-form-button"
-                        loading={auth.fetching}
+                        loading={isFetching}
                     >
                         {t("general.login")}
                     </Button>
