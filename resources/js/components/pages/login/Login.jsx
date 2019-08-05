@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { Form, Icon, Input, Button, Checkbox, Layout, Typography } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { isError } from "@ducks/auth";
 
 const { Content } = Layout;
 const { Title } = Typography;
@@ -13,27 +14,30 @@ function LoginPage({ form }) {
     const { getFieldDecorator } = form;
     const dispatch = useDispatch();
     const auth = useSelector(state => state.auth);
+    const error = useSelector(state => isError(state));
+    const [fieldValues, setFieldValues] = useState("");
 
-    const handleError = values => {
-        form.setFields({
-            password: {
-                value: values.password,
-                errors: [new Error(t("login.invalid"))]
-            },
-            email: {
-                value: values.email,
-                errors: [new Error(t("login.invalid"))]
-            }
-        });
-    };
-
-    console.log("TCL: LoginPage -> store", auth);
+    useEffect(() => {
+        function handleError() {
+            form.setFields({
+                password: {
+                    value: fieldValues.password,
+                    errors: [new Error(t("login.invalid"))]
+                },
+                email: {
+                    value: fieldValues.email,
+                    errors: [new Error(t("login.invalid"))]
+                }
+            });
+        }
+        if (error) {
+            handleError();
+        }
+    }, [error]);
 
     const submit = values => {
         dispatch({ type: "LOGIN_REQUEST", values });
-        if (auth.error) {
-            handleError(auth);
-        }
+        setFieldValues(values);
     };
 
     const handleSubmit = e => {
