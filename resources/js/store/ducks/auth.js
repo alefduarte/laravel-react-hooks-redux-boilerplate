@@ -22,6 +22,7 @@ const INITIAL_STATE = {
 
 const request = (state = INITIAL_STATE) => ({
   ...state,
+  error: null,
   fetching: true,
 });
 
