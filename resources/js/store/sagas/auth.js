@@ -5,7 +5,7 @@ import { Creators } from '../ducks/auth';
 import { LocalStorage } from '../../utils';
 /* eslint camelcase: ["error", {ignoreDestructuring: true, allow: ["remember_me"]}] */
 
-export function* loginRequest({ values: { email, password, remember_me } }) {
+export function* loginRequest({ email, password, remember_me }) {
   try {
     const token = yield call(() => login(email, password, remember_me));
     yield LocalStorage.setItem('token', token.data);
