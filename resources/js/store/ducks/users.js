@@ -107,3 +107,7 @@ export default createReducer(INITIAL_STATE, {
     [Types.DESTROY_USER_SUCCESS]: destroySuccess,
     [Types.FAILURE]: failure
 });
+
+/* ---------------------- Selectors --------------------- */
+
+export const isError = state => !!state.users.error;
