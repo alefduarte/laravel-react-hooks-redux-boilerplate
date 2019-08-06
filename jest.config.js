@@ -11,7 +11,7 @@ module.exports = {
 
     // The glob patterns Jest uses to detect test files. testMatch and testRegex cannot be used together
     // testMatch: ['**/resources/js/test/*.js?(x)', '**/?(*.)+(spec|test).js?(x)'],
-    testRegex: 'resources/js/test/.*.test.js$',
+    testRegex: 'resources/js/__test__/.*.test.js$',
 
     // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
     testPathIgnorePatterns: ["<rootDir>/node_modules/", "<rootDir>/vendor/"],
