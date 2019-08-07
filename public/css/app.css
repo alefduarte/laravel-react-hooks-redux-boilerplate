@@ -183,6 +183,7 @@
 
 .login-form-forgot {
   float: right;
+  padding: 0px;
 }
 
 .login-form-button {
@@ -198,5 +199,11 @@
 .signup-form {
   max-width: 800px;
   padding: 20px;
+}
+
+.signup-form-error {
+  padding: 0px;
+  position: absolute;
+  margin: -8px 0px 0px 225px;
 }
 
