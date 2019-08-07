@@ -22,11 +22,12 @@ export function* indexUsers() {
 }
 
 /* eslint camelcase: ["error", {ignoreDestructuring: true, allow: ["password_confirmation"]}] */
-export function* storeUsers({ values: { email, password, name, password_confirmation } }) {
+export function* storeUsers({ email, password, name, password_confirmation }) {
     try {
         const response = yield call(() => {
             return Api.post('/users/signup', { email, password, name, password_confirmation });
         });
+        // const response = yield call([Api, 'post'], email, pasword...);
 
         yield put(Creators.storeUserSuccess(response.data));
     } catch (error) {
