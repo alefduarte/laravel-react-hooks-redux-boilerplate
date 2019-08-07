@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import { Form, Input, Button, Layout, Typography } from "antd";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { isError, Types } from "@ducks/users";
+import history from "@routes/history";
+import { tailFormItemLayout, formItemLayout } from "@styles";
 
 const { Content } = Layout;
 const { Title } = Typography;
@@ -12,14 +15,40 @@ function RegisterForm({ form }) {
     const [confirmDirty, setConfirmDirty] = useState(false);
     const { getFieldDecorator } = form;
     const dispatch = useDispatch();
+    const error = useSelector(state => isError(state));
+    const [currentEmail, setEmail] = useState("");
 
+    useEffect(() => {
+        function handleError() {
+            form.setFields({
+                email: {
+                    value: currentEmail,
+                    errors: [new Error(t("signup.invalid"))]
+                }
+            });
+        }
+        if (error) {
+            handleError();
+        }
+    }, [error]);
+
+    /* eslint camelcase: ["error", {ignoreDestructuring: true, allow: ["password_confirmation"]}] */
     const handleSubmit = e => {
         e.preventDefault();
-        form.validateFieldsAndScroll((err, values) => {
-            if (!err) {
-                dispatch({ type: "STORE_USER", values });
+        form.validateFieldsAndScroll(
+            (err, { email, name, password, password_confirmation }) => {
+                if (!err) {
+                    dispatch({
+                        type: Types.STORE_USER,
+                        email,
+                        name,
+                        password,
+                        password_confirmation
+                    });
+                    setEmail(email);
+                }
             }
-        });
+        );
     };
 
     const handleConfirmBlur = e => {
@@ -40,30 +69,6 @@ function RegisterForm({ form }) {
             form.validateFields(["confirm"], { force: true });
         }
         callback();
-    };
-
-    const formItemLayout = {
-        labelCol: {
-            xs: { span: 24 },
-            sm: { span: 8 }
-        },
-        wrapperCol: {
-            xs: { span: 24 },
-            sm: { span: 16 }
-        }
-    };
-
-    const tailFormItemLayout = {
-        wrapperCol: {
-            xs: {
-                span: 24,
-                offset: 0
-            },
-            sm: {
-                span: 16,
-                offset: 8
-            }
-        }
     };
 
     return (
@@ -136,6 +141,22 @@ function RegisterForm({ form }) {
                     <Button type="primary" htmlType="submit">
                         {t("general.signup")}
                     </Button>
+                    <Button
+                        type="primary"
+                        onClick={() =>
+                            history.push(
+                                `/login/${encodeURIComponent(currentEmail)}`
+                            )
+                        }
+                        style={{
+                            marginLeft: "10px",
+                            backgroundColor: "#009975",
+                            borderColor: "#009975",
+                            display: error ? "inline" : "none"
+                        }}
+                    >
+                        {t("signup.login")}
+                    </Button>
                 </Form.Item>
             </Form>
         </Content>
@@ -147,6 +168,7 @@ RegisterForm.propTypes = {
         getFieldDecorator: PropTypes.func.isRequired,
         validateFieldsAndScroll: PropTypes.func.isRequired,
         getFieldValue: PropTypes.func.isRequired,
+        setFields: PropTypes.func.isRequired,
         validateFields: PropTypes.func.isRequired
     }).isRequired
 };
