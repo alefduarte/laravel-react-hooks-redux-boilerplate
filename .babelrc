@@ -8,7 +8,8 @@
                     "@pages": "./resources/js/components/pages/",
                     "@common": "./resources/js/components/common/",
                     "@ducks": "./resources/js/store/ducks/",
-                    "@routes": "./resources/js/routes/"
+                    "@routes": "./resources/js/routes/",
+                    "@styles": "./resources/js/components/common/styles"
                 }
             }
         ]
