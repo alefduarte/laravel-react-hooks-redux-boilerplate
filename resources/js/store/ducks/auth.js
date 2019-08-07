@@ -14,23 +14,23 @@ export const { Types, Creators } = createActions({
 
 const INITIAL_STATE = {
   user: LocalStorage.getItem('user') || null,
-  error: null,
   fetching: false,
+  error: null,
 };
 
 /* ----------------------- Reducers --------------------- */
 
 const request = (state = INITIAL_STATE) => ({
   ...state,
-  error: null,
   fetching: true,
+  error: null,
 });
 
 const success = (state, { user }) => ({
   ...state,
   user,
-  error: null,
   fetching: false,
+  error: null,
 });
 
 const failure = (state, { error }) => ({
