@@ -21,7 +21,7 @@ export const { Types, Creators } = createActions({
 const INITIAL_STATE = {
     data: [],
     fetching: false,
-    error: false
+    error: null
 };
 
 /* ----------------------- Reducers --------------------- */
@@ -35,19 +35,20 @@ const indexSuccess = (state, action) => ({
     ...state,
     data: action.data,
     fetching: false,
-    error: false
+    error: null
 });
 
 const store = (state) => ({
     ...state,
-    fetching: true
+    fetching: true,
+    error: null
 });
 
 const storeSuccess = (state, action) => ({
     ...state,
     data: [action.data, ...state.data],
     fetching: false,
-    error: false
+    error: null
 });
 
 const show = (state) => ({
@@ -59,7 +60,7 @@ const showSuccess = (state, action) => ({
     ...state,
     data: action.data,
     fetching: false,
-    error: false
+    error: null
 });
 
 const update = (state) => ({
@@ -71,7 +72,7 @@ const updateSuccess = (state, action) => ({
     ...state,
     data: state.data.map(item => (item.id === action.data.id) ? action.data : item),
     fetching: false,
-    error: false
+    error: null
 });
 
 const destroy = (state) => ({
@@ -83,13 +84,13 @@ const destroySuccess = (state, action) => ({
     ...state,
     data: state.data.filter(item => (item.id !== action.user.id)),
     fetching: false,
-    error: false
+    error: null
 });
 
-const failure = (state) => ({
+const failure = (state, { error }) => ({
     ...state,
     fetching: false,
-    error: true
+    error
 });
 
 /* -------------- Hookup Reducers to Types -------------- */
