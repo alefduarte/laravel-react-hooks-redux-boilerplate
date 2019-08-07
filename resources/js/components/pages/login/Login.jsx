@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
 import { Form, Icon, Input, Button, Checkbox, Layout, Typography } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { isError, Types } from "@ducks/auth";
+import history from "@routes/history";
 
 const { Content } = Layout;
 const { Title } = Typography;
 
-function LoginPage({ form }) {
+function LoginPage({
+    form,
+    match: {
+        params: { slug }
+    }
+}) {
     const { t } = useTranslation();
     const { getFieldDecorator } = form;
     const dispatch = useDispatch();
@@ -35,6 +40,16 @@ function LoginPage({ form }) {
             handleError();
         }
     }, [error]);
+
+    useEffect(() => {
+        if (slug) {
+            form.setFields({
+                email: {
+                    value: decodeURIComponent(slug)
+                }
+            });
+        }
+    }, []);
 
     /* eslint camelcase: ["error", {ignoreDestructuring: true, allow: ["remember_me"]}] */
     const submit = ({ email, password, remember_me }) => {
@@ -106,9 +121,17 @@ function LoginPage({ form }) {
                         valuePropName: "checked",
                         initialValue: true
                     })(<Checkbox>{t("login.remember")}</Checkbox>)}
-                    <a className="login-form-forgot" href="/">
+                    <Button
+                        type="link"
+                        onClick={() =>
+                            history.push(
+                                `/lostpass/${encodeURIComponent(currentEmail)}`
+                            )
+                        }
+                        className="login-form-forgot"
+                    >
                         {t("login.forgotPassword")}
-                    </a>
+                    </Button>
                     <br />
                     <Button
                         type="primary"
@@ -118,8 +141,13 @@ function LoginPage({ form }) {
                     >
                         {t("general.login")}
                     </Button>
-                    {t("login.or")}{" "}
-                    <Link to="/register">{t("login.register")}</Link>
+                    {t("login.or")}
+                    <Button
+                        type="link"
+                        onClick={() => history.push("/register")}
+                    >
+                        {t("login.register")}
+                    </Button>
                 </Form.Item>
             </Form>
         </Content>
@@ -131,6 +159,11 @@ LoginPage.propTypes = {
         getFieldDecorator: PropTypes.func.isRequired,
         setFields: PropTypes.func.isRequired,
         validateFields: PropTypes.func.isRequired
+    }).isRequired,
+    match: PropTypes.shape({
+        params: PropTypes.shape({
+            slug: PropTypes.string
+        })
     }).isRequired
 };
 
