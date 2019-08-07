@@ -20,7 +20,9 @@
         "noEmail": "Please input your E-mail!",
         "invalidEmail": "The input is not valid E-mail!",
         "noName": "Please input your name!",
-        "noMatch": "Password do not match!"
+        "noMatch": "Password do not match!",
+        "login": "Log in instead",
+        "invalid": "The email has already been taken."
     },
     "login": {
         "noUsername": "Please input your username!",
@@ -30,6 +32,13 @@
         "or": "or",
         "register": "register now!",
         "invalid": "Invalid username or password!"
+    },
+    "reset": {
+        "resetPass": "RESET PASSWORD",
+        "reset": "Reset",
+        "newPass": "New Password",
+        "confPass": "Confirm New Password",
+        "modal": "A password reset message was sent to the provided email address. <br/><br/>Please follow the instruction in the email to reset your password.<br/><br/>If you do not received the email reset message within a few minutes, please check you spam folder."
     },
     "landingPage": {
         "welcome": "This is the Main Screen",

@@ -20,7 +20,9 @@
         "noEmail": "Insira um e-mail!",
         "invalidEmail": "E-mail inválido!",
         "noName": "Insira um nome!",
-        "noMatch": "As senhas não coincidem!"
+        "noMatch": "As senhas não coincidem!",
+        "login": "Faça login",
+        "invalid": "E-mail já cadastrado."
     },
     "login": {
         "noUsername": "Insira um nome de usuário",
@@ -30,6 +32,13 @@
         "or": "ou",
         "register": "registrar agora!",
         "invalid": "Usuário ou senha inválidos!"
+    },
+    "reset": {
+        "resetPass": "REDEFINIR SENHA",
+        "reset": "Redefinir",
+        "newPass": "Nova Senha",
+        "confPass": "Confirmar Nova Senha",
+        "modal": "Uma mensagem para redefinir a senha foi enviado para o e-mail fornecido.<br/><br/> Siga as instruções no e-mail para redefinir a sua senha.<br/><br/> Se você não receber o e-mail de redefinição, verifique sua caixa de spam."
     },
     "landingPage": {
         "welcome": "Esta é a Página Inicial",
