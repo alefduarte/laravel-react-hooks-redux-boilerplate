@@ -3,7 +3,9 @@
         "profile": "Profile",
         "settings": "Settings",
         "logout": "Log out",
-        "language": "Language"
+        "language": "Language",
+        "expire": "Your account hasn't been verified and will expire in {{days}} day. Click here to resend verification link",
+        "expire_plural": "Your account hasn't been verified and will expire in {{days}} days. Click here to resend verification link"
     },
     "general": {
         "login": "Log in",
@@ -31,7 +33,9 @@
         "forgotPassword": "Forgot password",
         "or": "or",
         "register": "register now!",
-        "invalid": "Invalid username or password!"
+        "invalid": "Invalid username or password!",
+        "errorTitle": "Expired Account",
+        "errorContent": "Your account was not confirmed and has been <strong>locked out.</strong> <br/>A new confirm request has been sent to your e-mail. <br/>If you do not received the email reset message within a few minutes, please check you spam folder. <br/><br/>You can also try reseting your password in order to get reactivate your account."
     },
     "reset": {
         "resetPass": "RESET PASSWORD",

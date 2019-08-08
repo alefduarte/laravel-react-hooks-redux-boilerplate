@@ -31,14 +31,16 @@
         "forgotPassword": "Esqueci minha senha",
         "or": "ou",
         "register": "registrar agora!",
-        "invalid": "Usuário ou senha inválidos!"
+        "invalid": "Usuário ou senha inválidos!",
+        "errorTitle": "Conta Expirada",
+        "errorContent": "Sua conta não foi confirmada e foi <strong>impedida de entrar.</strong> <br/>Uma nova solicitação de confirmação foi enviada para o seu e-mail. <br/>Se você não receber o e-mail de redefinição dentro de alguns minutos, verifique sua caixa de spam. <br/><br/>Você também pode tentar resetar a sua senha para reativar sua conta."
     },
     "reset": {
         "resetPass": "REDEFINIR SENHA",
         "reset": "Redefinir",
         "newPass": "Nova Senha",
         "confPass": "Confirmar Nova Senha",
-        "modal": "Uma mensagem para redefinir a senha foi enviado para o e-mail fornecido.<br/><br/> Siga as instruções no e-mail para redefinir a sua senha.<br/><br/> Se você não receber o e-mail de redefinição, verifique sua caixa de spam."
+        "modal": "Uma mensagem para redefinir a senha foi enviado para o e-mail fornecido.<br/><br/> Siga as instruções no e-mail para redefinir a sua senha.<br/><br/> Se você não receber o e-mail de redefinição dentro de alguns minutos, verifique sua caixa de spam."
     },
     "landingPage": {
         "welcome": "Esta é a Página Inicial",
