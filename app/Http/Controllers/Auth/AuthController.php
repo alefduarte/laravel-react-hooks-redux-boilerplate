@@ -26,10 +26,12 @@ class AuthController extends Controller
             'remember_me' => 'boolean'
         ]);
 
-        
+
         $credentials['email'] = request('username');
         $credentials['password'] = request('password');
-        
+        // $credentials['active'] = 1;
+        $credentials['deleted_at'] = null;
+
         if (!Auth::attempt($credentials)) {
             return response()->json([
                 'message' => 'Unauthorized'
@@ -37,8 +39,15 @@ class AuthController extends Controller
         }
 
         $user = $request->user();
+        if (!$user->active && Carbon::parse($user->updated_at)->addWeeks(1)->isPast()) {
+            return response()->json([
+                'message' => 'User no longer active.'
+            ], 403);
+        }
+
         $tokenResult = $user->createToken('Personal Access Token');
         $token = $tokenResult->token;
+        
         if ($request->remember_me) {
             $token->expires_at = Carbon::now()->addWeeks(1);
         }
