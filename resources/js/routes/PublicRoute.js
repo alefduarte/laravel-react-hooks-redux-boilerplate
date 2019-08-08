@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { Layout } from 'antd';
 import { useSelector } from "react-redux";
 import { isLoggedIn } from "@ducks/auth";
-import { Navbar, PageFooter } from '@common/';
+import { Navbar, PageFooter } from '@components';
 import Main from '../Main';
 
 

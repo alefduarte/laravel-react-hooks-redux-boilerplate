@@ -5,7 +5,7 @@ import { Layout } from 'antd';
 import { useSelector } from "react-redux";
 import { isLoggedIn } from "@ducks/auth";
 import Main from '../Main';
-import { Navbar, PageFooter } from '@common/'
+import { Navbar, PageFooter } from '@components'
 
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
