@@ -8,6 +8,7 @@ export const { Types, Creators } = createActions({
   loginSuccess: ['user'],
   loginFailure: ['error'],
   logoutRequest: null,
+  resetError: null
 });
 
 /* -------------------- Initial State ------------------- */
@@ -45,6 +46,11 @@ const logout = state => ({
   error: null,
 });
 
+const resetError = (state = INITIAL_STATE) => ({
+  ...state,
+  error: null,
+});
+
 /* -------------- Hookup Reducers to Types -------------- */
 
 export default createReducer(INITIAL_STATE, {
@@ -52,6 +58,7 @@ export default createReducer(INITIAL_STATE, {
   [Types.LOGIN_SUCCESS]: success,
   [Types.LOGIN_FAILURE]: failure,
   [Types.LOGOUT_REQUEST]: logout,
+  [Types.RESET_ERROR]: resetError
 });
 
 /* ---------------------- Selectors --------------------- */
@@ -59,3 +66,14 @@ export default createReducer(INITIAL_STATE, {
 export const isLoggedIn = state => !!state.auth.user;
 export const isError = state => !!state.auth.error;
 export const isAdmin = state => state.auth.user && state.auth.user.type === "admin";
+export const expiresAt = state => {
+  if (state.auth.user && !state.auth.user.active) {
+    const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+    const firstDate = new Date(state.auth.user.updated_at);
+    firstDate.setDate(firstDate.getDate() + 14); // 14 days, time to confirm account
+    const secondDate = new Date();
+    const diffDays = Math.round(((firstDate.getTime() - secondDate.getTime()) / (oneDay)));
+    return diffDays;
+  }
+  return 0;
+}

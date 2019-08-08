@@ -13,7 +13,8 @@ export const { Types, Creators } = createActions({
     updateUserSuccess: ['data'],
     destroyUser: ['id'],
     destroyUserSuccess: ['user'],
-    failure: ['error']
+    failure: ['error'],
+    resetError: null,
 });
 
 /* -------------------- Initial State ------------------- */
@@ -93,6 +94,11 @@ const failure = (state, { error }) => ({
     error
 });
 
+const resetError = (state = INITIAL_STATE) => ({
+    ...state,
+    error: null,
+});
+
 /* -------------- Hookup Reducers to Types -------------- */
 
 export default createReducer(INITIAL_STATE, {
@@ -106,7 +112,8 @@ export default createReducer(INITIAL_STATE, {
     [Types.UPDATE_USER_SUCCESS]: updateSuccess,
     [Types.DESTROY_USER]: destroy,
     [Types.DESTROY_USER_SUCCESS]: destroySuccess,
-    [Types.FAILURE]: failure
+    [Types.FAILURE]: failure,
+    [Types.RESET_ERROR]: resetError
 });
 
 /* ---------------------- Selectors --------------------- */
