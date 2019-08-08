@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Notifications\SignupActivate;
 
 class UserController extends Controller
 {
@@ -50,7 +51,10 @@ class UserController extends Controller
             'email' => request('email'),
             'type' => "user",
             'password' => Hash::make(request('password')),
+            'activation_token' => str_random(60)
         ]);
+
+        $user->notify(new SignupActivate($user));
 
         return response()->json([
             'message' => 'User created successfully!',
@@ -101,5 +105,19 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function activate($token)
+    {
+        $user = User::where('activation_token', $token)->first();
+        if (!$user) {
+            return response()->json([
+                'message' => 'This activation token is invalid.'
+            ], 404);
+        }
+        $user->active = true;
+        $user->activation_token = '';
+        $user->save();
+        return $user;
     }
 }
