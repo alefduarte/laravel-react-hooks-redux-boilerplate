@@ -83,6 +83,10 @@
     min-height: calc(100vh - 135px);
 }
 
+.form-content {
+    padding: 30px 30px 0px 30px;
+}
+
 /* ************************************************************************* */
 /* ------------------------------- 2. FOOTER ------------------------------- */
 /* ************************************************************************* */
@@ -120,7 +124,7 @@
     height: 100%;
     display: inline-block;
     transition: all 0.3s;
-    padding: 0px 12px;
+    padding: 0px 5px;
     color: #708090;
     vertical-align: middle;
 
@@ -145,7 +149,7 @@
 .header-container {
     float: right;
     height: 100%;
-    padding: 0px 15px;
+    padding-right: 15px;
 }
 
 .header-home-button {
@@ -160,6 +164,17 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     display: inline-block !important;
+}
+
+.rectangle-message {
+    position: absolute;
+    line-height: 30px;
+    color: white;
+    text-align: center;
+    height: 30px;
+    width: 100%;
+    margin-top: 60px;
+    background-color: #8d021f;
 }
 
 /* ************************************************************************* */
