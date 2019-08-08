@@ -5,11 +5,11 @@
             {
                 "root": ["./"],
                 "alias": {
-                    "@pages": "./resources/js/components/pages/",
-                    "@common": "./resources/js/components/common/",
+                    "@pages": "./resources/js/pages/",
+                    "@components": "./resources/js/components/",
                     "@ducks": "./resources/js/store/ducks/",
                     "@routes": "./resources/js/routes/",
-                    "@styles": "./resources/js/components/common/styles"
+                    "@styles": "./resources/js/components/styles"
                 }
             }
         ]
