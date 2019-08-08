@@ -18,10 +18,15 @@ export function* loginRequest({ email, password, remember_me }) {
     yield user.data.type === 'admin' ? history.push('/dashboard') : history.push('/home');
 
   } catch (error) {
-    if (error.response.status === 401) {
-      yield put(Creators.loginFailure('Invalid username or password!'));
-    } else {
-      yield put(Creators.loginFailure(error.toString()));
+    switch (error.response.status) {
+      case 401:
+        yield put(Creators.loginFailure(401));
+        break;
+      case 403:
+        yield put(Creators.loginFailure(403));
+        break;
+      default:
+        yield put(Creators.loginFailure(error.toString()));
     }
   }
 }
