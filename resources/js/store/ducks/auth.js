@@ -7,6 +7,8 @@ export const { Types, Creators } = createActions({
   loginRequest: ['email', 'password'],
   loginSuccess: ['user'],
   loginFailure: ['error'],
+  refreshRequest: null,
+  refreshSuccess: ['user'],
   logoutRequest: null,
   resetError: null
 });
@@ -46,6 +48,19 @@ const logout = state => ({
   error: null,
 });
 
+const refreshRequest = state => ({
+  ...state,
+  fetching: true,
+  error: null,
+})
+
+const refreshSuccess = (state, { user }) => ({
+  ...state,
+  user,
+  fetching: false,
+  error: null,
+})
+
 const resetError = (state = INITIAL_STATE) => ({
   ...state,
   error: null,
@@ -58,6 +73,8 @@ export default createReducer(INITIAL_STATE, {
   [Types.LOGIN_SUCCESS]: success,
   [Types.LOGIN_FAILURE]: failure,
   [Types.LOGOUT_REQUEST]: logout,
+  [Types.REFRESH_REQUEST]: refreshRequest,
+  [Types.REFRESH_SUCCESS]: refreshSuccess,
   [Types.RESET_ERROR]: resetError
 });
 
@@ -66,11 +83,12 @@ export default createReducer(INITIAL_STATE, {
 export const isLoggedIn = state => !!state.auth.user;
 export const isError = state => !!state.auth.error;
 export const isAdmin = state => state.auth.user && state.auth.user.type === "admin";
+export const isActive = state => state.auth.user && state.auth.user.active;
 export const expiresAt = state => {
   if (state.auth.user && !state.auth.user.active) {
     const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
     const firstDate = new Date(state.auth.user.updated_at);
-    firstDate.setDate(firstDate.getDate() + 14); // 14 days, time to confirm account
+    firstDate.setDate(firstDate.getDate() + 7); // 7 days, time to confirm account
     const secondDate = new Date();
     const diffDays = Math.round(((firstDate.getTime() - secondDate.getTime()) / (oneDay)));
     return diffDays;
