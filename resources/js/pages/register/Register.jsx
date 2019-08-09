@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
-import { Form, Input, Button, Layout, Typography } from "antd";
+import { Form, Input, Button, Layout, Modal, Typography } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { isError, Types } from "@ducks/users";
+import { isError, isSaved, Types } from "@ducks/users";
 import history from "@routes/history";
 import { tailFormItemLayout, formItemLayout } from "@styles";
 
@@ -15,7 +15,9 @@ function RegisterForm({ form }) {
     const [confirmDirty, setConfirmDirty] = useState(false);
     const { getFieldDecorator } = form;
     const dispatch = useDispatch();
+    const isFetching = useSelector(state => state.users.fetching);
     const error = useSelector(state => isError(state));
+    const saved = useSelector(state => isSaved(state));
     const [currentEmail, setEmail] = useState("");
 
     useEffect(() => {
@@ -31,9 +33,25 @@ function RegisterForm({ form }) {
             handleError();
         }
         return () => {
-            dispatch({ type: Types.RESET_ERROR });
+            dispatch({ type: Types.RESET_USER_STATE });
         };
     }, [error]);
+
+    useEffect(() => {
+        function handleSaved() {
+            Modal.success({
+                title: t("signup.successTitle"),
+                content: t("signup.successContent"),
+                okText: t("general.login"),
+                onOk() {
+                    history.push(`/login/${encodeURIComponent(currentEmail)}`);
+                }
+            });
+        }
+        if (saved) {
+            handleSaved();
+        }
+    }, [saved]);
 
     /* eslint camelcase: ["error", {ignoreDestructuring: true, allow: ["password_confirmation"]}] */
     const handleSubmit = e => {
@@ -141,7 +159,11 @@ function RegisterForm({ form }) {
                     )}
                 </Form.Item>
                 <Form.Item {...tailFormItemLayout}>
-                    <Button type="primary" htmlType="submit">
+                    <Button
+                        type="primary"
+                        htmlType="submit"
+                        loading={isFetching}
+                    >
                         {t("general.signup")}
                     </Button>
                     <Button
