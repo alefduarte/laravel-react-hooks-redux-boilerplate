@@ -13,11 +13,11 @@ export function* indexUsers() {
             yield put(Creators.indexUsersSuccess(response.data));
         }
         else {
-            yield put(Creators.failure('Falha ao processar requisição.'))
+            yield put(Creators.userFailure('Falha ao processar requisição.'))
         }
 
     } catch (error) {
-        yield put(Creators.failure(error.toString()));
+        yield put(Creators.userFailure(error.toString()));
     }
 }
 
@@ -31,7 +31,7 @@ export function* storeUsers({ email, password, name, password_confirmation }) {
 
         yield put(Creators.storeUserSuccess(response.data));
     } catch (error) {
-        yield put(Creators.failure(error.toString()));
+        yield put(Creators.userFailure(error.toString()));
     }
 }
 
@@ -43,6 +43,6 @@ export function* destroyUsers(action) {
 
         yield put(Creators.destroyUserSuccess('Usuário removido com sucesso.'));
     } catch (error) {
-        yield put(Creators.failure('Falha ao remover usuário.'));
+        yield put(Creators.userFailure('Falha ao remover usuário.'));
     }
 }
