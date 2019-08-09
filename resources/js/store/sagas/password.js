@@ -13,11 +13,11 @@ export function* tokenRequest({ email }) {
             yield put(Creators.tokenSuccess(response.data));
         }
         else {
-            yield put(Creators.failure('Falha ao processar requisição.'))
+            yield put(Creators.passwordFailure('Falha ao processar requisição.'))
         }
 
     } catch (error) {
-        yield put(Creators.failure(error.toString()));
+        yield put(Creators.passwordFailure(error.toString()));
     }
 }
 
@@ -30,6 +30,6 @@ export function* passwordRequest({ email, token, password, password_confirmation
 
         yield put(Creators.resetSuccess(response.data));
     } catch (error) {
-        yield put(Creators.failure(error.toString()));
+        yield put(Creators.passwordFailure(error.toString()));
     }
 }
