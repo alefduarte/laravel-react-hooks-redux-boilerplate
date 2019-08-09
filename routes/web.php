@@ -13,4 +13,4 @@
 
 Route::get('/{path?}', function () {
     return view('home');
-})->where('path', '(?!api)([A-z\d-\/_.]+)?');
+})->where('path', '.*');
