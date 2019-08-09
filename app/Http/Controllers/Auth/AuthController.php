@@ -29,7 +29,6 @@ class AuthController extends Controller
 
         $credentials['email'] = request('username');
         $credentials['password'] = request('password');
-        // $credentials['active'] = 1;
         $credentials['deleted_at'] = null;
 
         if (!Auth::attempt($credentials)) {
