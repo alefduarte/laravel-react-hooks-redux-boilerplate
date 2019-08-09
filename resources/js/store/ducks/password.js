@@ -7,7 +7,7 @@ export const { Types, Creators } = createActions({
     tokenSuccess: null,
     resetRequest: ['token'],
     resetSuccess: null,
-    failure: ['error']
+    passwordFailure: ['error']
 });
 
 /* -------------------- Initial State ------------------- */
@@ -24,31 +24,31 @@ const INITIAL_STATE = {
 const tokenRequest = (state, { email }) => ({
     ...state,
     email,
-    fetching: false,
+    fetching: true,
     error: null
 });
 
 const tokenSuccess = (state) => ({
     ...state,
-    fetching: true,
+    fetching: false,
     error: null
 });
 
 const resetRequest = (state, { token }) => ({
     ...state,
     token,
-    fetching: false,
+    fetching: true,
     error: null
 });
 
 const resetSuccess = (state) => ({
     ...state,
     token: null,
-    fetching: true,
+    fetching: false,
     error: null
 });
 
-const failure = (state, { error }) => ({
+const passwordFailure = (state, { error }) => ({
     ...state,
     fetching: false,
     error
@@ -61,7 +61,7 @@ export default createReducer(INITIAL_STATE, {
     [Types.TOKEN_SUCCESS]: tokenSuccess,
     [Types.RESET_REQUEST]: resetRequest,
     [Types.RESET_SUCCESS]: resetSuccess,
-    [Types.FAILURE]: failure
+    [Types.PASSWORD_FAILURE]: passwordFailure
 });
 
 /* ---------------------- Selectors --------------------- */
