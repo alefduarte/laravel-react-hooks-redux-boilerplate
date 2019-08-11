@@ -11,22 +11,26 @@ const { MIX_API_CLIENT_ID } = process.env
 const { MIX_API_GRANT_TYPE } = process.env
 const { MIX_API_CLIENT_SECRET } = process.env
 const { MIX_API_REFRESH_TOKEN_GRANT_TYPE } = process.env
-
 // Retorna o header da requisição.
-const getHeader = () => ({
-    Accept: 'application/json',
-    'Content-Type': 'application/json',
-});
+const getHeader = () => {
+    const acceptLanguage = localStorage.getItem("i18nextLng");
+    return {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'Accept-Language': acceptLanguage
+    }
+};
 
 // Retorna o header da requisição com autenticação JWT se disponível.
 const getHeaderAuthorization = () => {
     try {
+        const acceptLanguage = localStorage.getItem("i18nextLng");
         const { token_type, access_token } = LocalStorage.getItem('token');
 
         return {
             Accept: 'application/json',
             'Content-Type': 'application/json',
-            // 'Content-Type': 'multipart/form-data',
+            'Accept-Language': acceptLanguage,
             Authorization: `${token_type} ${access_token}`,
         };
     } catch (error) {
