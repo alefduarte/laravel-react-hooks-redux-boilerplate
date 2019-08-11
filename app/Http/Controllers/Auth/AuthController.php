@@ -25,8 +25,6 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-        // $this->clearLoginAttempts($request);
-
         if ($this->hasTooManyLoginAttempts($request)) {
             $this->fireLockoutEvent($request);
             return $this->sendLockoutResponse($request);
