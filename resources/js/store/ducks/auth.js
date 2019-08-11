@@ -7,6 +7,7 @@ export const { Types, Creators } = createActions({
   loginRequest: ['email', 'password'],
   loginSuccess: ['user'],
   loginFailure: ['error'],
+  lockoutUser: ['lockoutSeconds'],
   refreshRequest: null,
   refreshSuccess: ['user'],
   logoutRequest: null,
@@ -18,6 +19,7 @@ export const { Types, Creators } = createActions({
 const INITIAL_STATE = {
   user: LocalStorage.getItem('user') || null,
   fetching: false,
+  lockoutSeconds: null,
   error: null,
 };
 
@@ -26,6 +28,7 @@ const INITIAL_STATE = {
 const request = (state = INITIAL_STATE) => ({
   ...state,
   fetching: true,
+  lockoutSeconds: null,
   error: null,
 });
 
@@ -33,6 +36,7 @@ const success = (state, { user }) => ({
   ...state,
   user,
   fetching: false,
+  lockoutSeconds: null,
   error: null,
 });
 
@@ -42,15 +46,23 @@ const failure = (state, { error }) => ({
   fetching: false,
 });
 
+const lockoutUser = (state, { lockoutSeconds = state.lockoutSeconds }) => ({
+  ...state,
+  lockoutSeconds,
+  fetching: false,
+});
+
 const logout = state => ({
   ...state,
   user: null,
+  lockoutSeconds: null,
   error: null,
 });
 
 const refreshRequest = state => ({
   ...state,
   fetching: true,
+  lockoutSeconds: null,
   error: null,
 })
 
@@ -58,12 +70,14 @@ const refreshSuccess = (state, { user }) => ({
   ...state,
   user,
   fetching: false,
+  lockoutSeconds: null,
   error: null,
 })
 
 const resetError = (state = INITIAL_STATE) => ({
   ...state,
   error: null,
+  lockoutSeconds: null,
 });
 
 /* -------------- Hookup Reducers to Types -------------- */
@@ -72,6 +86,7 @@ export default createReducer(INITIAL_STATE, {
   [Types.LOGIN_REQUEST]: request,
   [Types.LOGIN_SUCCESS]: success,
   [Types.LOGIN_FAILURE]: failure,
+  [Types.LOCKOUT_USER]: lockoutUser,
   [Types.LOGOUT_REQUEST]: logout,
   [Types.REFRESH_REQUEST]: refreshRequest,
   [Types.REFRESH_SUCCESS]: refreshSuccess,
@@ -92,6 +107,13 @@ export const expiresAt = state => {
     const secondDate = new Date();
     const diffDays = Math.round(((firstDate.getTime() - secondDate.getTime()) / (oneDay)));
     return diffDays;
+  }
+  return 0;
+}
+export const lockedSeconds = state => {
+  if (state.auth.lockoutSeconds) {
+    const timeDiff = state.auth.lockoutSeconds.getTime() - new Date().getTime();
+    return timeDiff > 0 ? Math.round(timeDiff / 1000) : 0;
   }
   return 0;
 }
