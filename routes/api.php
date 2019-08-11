@@ -13,9 +13,10 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::group(['prefix' => 'users'], function () {
+Route::group(['prefix' => 'users', 'middleware' => 'api'], function () {
     Route::post('signup', 'UserController@store');
     Route::get('activate/{token}', 'UserController@activate');
+    Route::post('activate', 'UserController@sendActivation');
 
     Route::group(['middleware' => 'auth:api'], function () {
         Route::get('index', 'UserController@index');
@@ -24,7 +25,7 @@ Route::group(['prefix' => 'users'], function () {
     });
 });
 
-Route::group(['prefix' => 'auth'], function () {
+Route::group(['prefix' => 'auth', 'middleware' => 'api'], function () {
     Route::post('login', 'AuthController@login');
 
     Route::group(['middleware' => 'auth:api'], function () {
