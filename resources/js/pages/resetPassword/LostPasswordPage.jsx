@@ -108,6 +108,6 @@ LostPassword.propTypes = {
     }).isRequired
 };
 
-const LostPasswordPage = Form.create({ name: "login_page" })(LostPassword);
+const LostPasswordPage = Form.create({ name: "lost_password_page" })(LostPassword);
 
 export default LostPasswordPage;

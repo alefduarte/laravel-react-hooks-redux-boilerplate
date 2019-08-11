@@ -169,6 +169,6 @@ ResetPassword.propTypes = {
     }).isRequired
 };
 
-const ResetPasswordPage = Form.create({ name: "login_page" })(ResetPassword);
+const ResetPasswordPage = Form.create({ name: "reset_page" })(ResetPassword);
 
 export default ResetPasswordPage;
