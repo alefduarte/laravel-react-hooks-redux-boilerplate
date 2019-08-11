@@ -33,6 +33,10 @@
         "successTitle": "Cadastrado",
         "successContent": "Usuário cadastrado com sucesso"
     },
+    "error": {
+        "500": "Erro Interno do Servidor. Por favor contate o Administrador!"
+        
+    },
     "login": {
         "noUsername": "Insira um nome de usuário",
         "noPassword": "Insira uma senha",

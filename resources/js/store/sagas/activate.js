@@ -22,6 +22,9 @@ export function* sendRequest({ email }) {
             case 404:
                 yield put(Creators.activateFailure(404));
                 break;
+            case 500:
+                yield put(Creators.loginFailure("error.500"));
+                break;
             default:
                 yield put(Creators.activateFailure(error.toString()))
         }

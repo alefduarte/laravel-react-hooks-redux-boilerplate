@@ -29,6 +29,9 @@ export function* loginRequest({ email, password, remember_me }) {
         yield put(Creators.loginFailure(429));
         yield put(Creators.lockoutUser(new Date(new Date().getTime() + error.response.data.seconds * 1000)));
         break;
+      case 500:
+        yield put(Creators.loginFailure("error.500"));
+        break;
       default:
         yield put(Creators.loginFailure(error.toString()));
     }

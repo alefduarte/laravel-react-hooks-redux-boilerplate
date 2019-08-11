@@ -61,7 +61,7 @@ function SendActivation({
                     handleError("resend.errorAlreadySent");
                     break;
                 default:
-                    handleError(errorStatus);
+                    handleError(t(errorStatus));
                     break;
             }
         }
@@ -132,6 +132,8 @@ SendActivation.propTypes = {
     }).isRequired
 };
 
-const SendActivationPage = Form.create({ name: "activation_page" })(SendActivation);
+const SendActivationPage = Form.create({ name: "activation_page" })(
+    SendActivation
+);
 
 export default SendActivationPage;

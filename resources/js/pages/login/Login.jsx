@@ -75,7 +75,7 @@ function LoginPage({
                     );
                     break;
                 default:
-                    handleError(errorStatus);
+                    handleError(t(errorStatus));
                     break;
             }
         }

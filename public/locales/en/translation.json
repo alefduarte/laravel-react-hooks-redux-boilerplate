@@ -33,6 +33,9 @@
         "successTitle": "Registered",
         "successContent": "Users registered successfully"
     },
+    "error": {
+        "500": "Internal Error Server. Please contact the administrator!"
+    },
     "login": {
         "noUsername": "Please input your username!",
         "noPassword": "Please input your Password!",
