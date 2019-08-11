@@ -7,3 +7,5 @@ export { default as HomePage } from './home/HomePage';
 export { default as Dashboard } from './dashboard/Dashboard';
 export { default as LostPasswordPage } from './resetPassword/LostPasswordPage';
 export { default as ResetPasswordPage } from './resetPassword/ResetPasswordPage';
+export { default as ActivateAccount } from './activateAccount/ActivateAccount';
+export { default as SendActivationPage } from './activateAccount/SendActivationPage';
