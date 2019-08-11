@@ -25,7 +25,8 @@ const getHeaderAuthorization = () => {
 
         return {
             Accept: 'application/json',
-            'Content-Type': 'multipart/form-data',
+            'Content-Type': 'application/json',
+            // 'Content-Type': 'multipart/form-data',
             Authorization: `${token_type} ${access_token}`,
         };
     } catch (error) {
