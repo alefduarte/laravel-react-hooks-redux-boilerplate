@@ -5,19 +5,26 @@ import { Api } from '../../services';
 
 export function* sendRequest({ email }) {
     try {
-        const response = yield call(() => {
-            return Api.post('/password/create', { email });
-        });
+        const response = yield call([Api, 'post'], '/users/activate', { email });
 
         if (response.status === 200) {
-            yield put(Creators.tokenSuccess(response.data));
+            yield put(Creators.sendSuccess(response.data));
         }
         else {
-            yield put(Creators.passwordFailure('Falha ao processar requisição.'))
+            yield put(Creators.activateFailure('Falha ao processar requisição.'))
         }
 
     } catch (error) {
-        yield put(Creators.passwordFailure(error.toString()));
+        switch (error.response.status) {
+            case 403:
+                yield put(Creators.activateFailure(403));
+                break;
+            case 404:
+                yield put(Creators.activateFailure(404));
+                break;
+            default:
+                yield put(Creators.activateFailure(error.toString()))
+        }
     }
 }
 
