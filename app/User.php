@@ -12,14 +12,14 @@ class User extends Authenticatable
     use HasApiTokens, Notifiable, SoftDeletes;
 
 
-    protected $dates = ['deleted_at'];
+    protected $dates = ['deleted_at', 'activation_sent_at'];
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'active', 'activation_token'
+        'name', 'email', 'password', 'active', 'activation_token', 'activation_sent_at'
     ];
 
     /**
