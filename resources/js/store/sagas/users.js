@@ -24,10 +24,7 @@ export function* indexUsers() {
 /* eslint camelcase: ["error", {ignoreDestructuring: true, allow: ["password_confirmation"]}] */
 export function* storeUsers({ email, password, name, password_confirmation }) {
     try {
-        const response = yield call(() => {
-            return Api.post('/users/signup', { email, password, name, password_confirmation });
-        });
-        // const response = yield call([Api, 'post'], email, pasword...);
+        const response = yield call([Api, 'post'], '/users/signup', { email, password, name, password_confirmation });
 
         yield put(Creators.storeUserSuccess(response.data));
     } catch (error) {
@@ -37,9 +34,7 @@ export function* storeUsers({ email, password, name, password_confirmation }) {
 
 export function* destroyUsers(action) {
     try {
-        yield call(() => {
-            return Api.delete('/users', action.data);
-        });
+        yield call([Api, 'delete'], '/delete', action.data);
 
         yield put(Creators.destroyUserSuccess('Usuário removido com sucesso.'));
     } catch (error) {
