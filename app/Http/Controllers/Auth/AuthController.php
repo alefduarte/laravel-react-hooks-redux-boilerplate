@@ -4,10 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\ThrottlesLogins;
+
 use Carbon\Carbon;
 
 class AuthController extends Controller
 {
+    use ThrottlesLogins;
+    protected $maxAttempts = 5;
+    protected $decayMinutes = 5;
     /**
      * Log in user and create token
      *
@@ -20,18 +25,25 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
+        // $this->clearLoginAttempts($request);
+
+        if ($this->hasTooManyLoginAttempts($request)) {
+            $this->fireLockoutEvent($request);
+            return $this->sendLockoutResponse($request);
+        }
+
         $request->validate([
             'username' => 'required|string|email',
             'password' => 'required|string',
             'remember_me' => 'boolean'
         ]);
 
-
         $credentials['email'] = request('username');
         $credentials['password'] = request('password');
         $credentials['deleted_at'] = null;
 
         if (!Auth::attempt($credentials)) {
+            $this->incrementLoginAttempts($request);
             return response()->json([
                 'message' => 'Unauthorized'
             ], 401);
@@ -46,12 +58,13 @@ class AuthController extends Controller
 
         $tokenResult = $user->createToken('Personal Access Token');
         $token = $tokenResult->token;
-        
+
         if ($request->remember_me) {
             $token->expires_at = Carbon::now()->addWeeks(1);
         }
 
         $token->save();
+        $this->clearLoginAttempts($request);
         return response()->json([
             'access_token' => $tokenResult->accessToken,
             'token_type' => 'Bearer',
@@ -82,5 +95,32 @@ class AuthController extends Controller
     public function user(Request $request)
     {
         return response()->json($request->user());
+    }
+
+    public function username()
+    {
+        return 'email';
+    }
+
+    public function decayMinutes()
+    {
+        return property_exists($this, 'decayMinutes') ? $this->decayMinutes : 1;
+    }
+
+    public function maxAttempts()
+    {
+        return property_exists($this, 'maxAttempts') ? $this->maxAttempts : 5;
+    }
+
+    protected function sendLockoutResponse(Request $request)
+    {
+        $seconds = $this->limiter()->availableIn(
+            $this->throttleKey($request)
+        );
+
+        return response()->json([
+            'error' => 'Too Many Requests',
+            'seconds' => $seconds
+        ], 429);
     }
 }
