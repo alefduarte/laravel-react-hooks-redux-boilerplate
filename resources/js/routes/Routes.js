@@ -16,7 +16,9 @@ import {
     HomePage,
     Dashboard,
     LostPasswordPage,
-    ResetPasswordPage
+    ResetPasswordPage,
+    ActivateAccount,
+    SendActivationPage
 } from '@pages';
 
 const Routes = () => (
@@ -26,6 +28,9 @@ const Routes = () => (
             <PublicRoute restricted={false} component={LostPasswordPage} path="/lostpass" exact />
             <PublicRoute restricted={false} component={LostPasswordPage} path="/lostpass/:slug" exact />
             <PublicRoute restricted={false} component={ResetPasswordPage} path="/reset/:slug" exact />
+            <PublicRoute restricted={false} component={ActivateAccount} path="/register/activate/:slug" exact />
+            <PublicRoute restricted={false} component={SendActivationPage} path="/resend/" exact />
+            <PublicRoute restricted={false} component={SendActivationPage} path="/resend/:slug" exact />
             <PublicRoute restricted component={Login} path="/login" exact />
             <PublicRoute restricted component={Login} path="/login/:slug" exact />
             <PrivateRoute component={Logout} path="/logout" exact />
