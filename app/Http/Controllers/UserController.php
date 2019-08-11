@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Notifications\SignupActivate;
@@ -55,6 +56,8 @@ class UserController extends Controller
         ]);
 
         $user->notify(new SignupActivate($user));
+        $user->activation_sent_at = Carbon::now();
+        $user->save();
 
         return response()->json([
             'message' => 'User created successfully!',
@@ -117,7 +120,41 @@ class UserController extends Controller
         }
         $user->active = true;
         $user->activation_token = '';
+        $user->activation_sent_at = null;
+        $user->email_verified_at = Carbon::now();
         $user->save();
         return $user;
+    }
+
+    public function sendActivation(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|string|email',
+        ]);
+
+        return response()->json([
+            'message' => 'Already sent.'
+        ], 500);
+
+        $user = User::where('email', request('email'))->first();
+        if (!$user) {
+            return response()->json([
+                'message' => 'User not found'
+            ], 404);
+        }
+
+        if (Carbon::parse($user->activation_sent_at)->addHours(1)->gt(Carbon::now())) {
+            return response()->json([
+                'message' => 'Already sent.'
+            ], 403);
+        }
+
+        $user->notify(new SignupActivate($user));
+        $user->activation_sent_at = Carbon::now();
+        $user->save();
+
+        return response()->json([
+            'message' => 'Code sent successfully!'
+        ], 200);
     }
 }
