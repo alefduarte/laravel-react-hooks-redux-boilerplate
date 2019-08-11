@@ -25,6 +25,10 @@ export function* loginRequest({ email, password, remember_me }) {
       case 403:
         yield put(Creators.loginFailure(403));
         break;
+      case 429:
+        yield put(Creators.loginFailure(429));
+        yield put(Creators.lockoutUser(new Date(new Date().getTime() + error.response.data.seconds * 1000)));
+        break;
       default:
         yield put(Creators.loginFailure(error.toString()));
     }
@@ -60,9 +64,6 @@ export function* refreshTokenRequest() {
   }
 }
 
-/** Para maior segurança, ao fazer o logout do cliente
- *  chamar o método para revogar o token de acesso antes
- *  de remover as informações do armazenamento local. */
 export function* logoutRequest() {
   try {
     const user = yield call(() => getUser());
