@@ -19,7 +19,8 @@
         "name": "Name",
         "passwordConf": "Confirm Password",
         "SEND": "SEND",
-        "error": "Error"
+        "error": "Error",
+        "seconds": "seconds"
     },
     "signup": {
         "noPasswordConf": "Please confirm your password!",
@@ -41,7 +42,8 @@
         "register": "register now!",
         "invalid": "Invalid username or password!",
         "errorTitle": "Expired Account",
-        "errorContent": "Your account was not confirmed and has been <strong>locked out.</strong> <br/>A new confirm request has been sent to your e-mail. <br/>If you do not received the email reset message within a few minutes, please check you spam folder. <br/><br/>You can also try reseting your password in order to get reactivate your account."
+        "errorContent": "Your account was not confirmed and has been <strong>locked out.</strong> <br/>A new confirm request has been sent to your e-mail. <br/>If you do not received the email reset message within a few minutes, please check you spam folder. <br/><br/>You can also try reseting your password in order to get reactivate your account.",
+        "error429": "Too many attempts to log in! Try again in"
     },
     "reset": {
         "resetPass": "RESET PASSWORD",
