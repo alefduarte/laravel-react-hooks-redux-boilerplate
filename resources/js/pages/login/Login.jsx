@@ -12,7 +12,7 @@ import {
 } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { Trans, useTranslation } from "react-i18next";
-import { isError, Types } from "@ducks/auth";
+import { lockedSeconds, isError, Types } from "@ducks/auth";
 import history from "@routes/history";
 
 const { Content } = Layout;
@@ -30,6 +30,7 @@ function LoginPage({
     const isFetching = useSelector(state => state.auth.fetching);
     const errorStatus = useSelector(state => state.auth.error);
     const error = useSelector(state => isError(state));
+    const lockoutSeconds = useSelector(state => lockedSeconds(state));
     const [currentEmail, setEmail] = useState("");
     const [currentPassword, setPassword] = useState("");
 
@@ -66,12 +67,19 @@ function LoginPage({
                 case 403:
                     handleExpiredError();
                     break;
+                case 429:
+                    handleError(
+                        `${t("login.error429")} ${lockoutSeconds} ${t(
+                            "general.seconds"
+                        )}`
+                    );
+                    break;
                 default:
                     handleError(errorStatus);
                     break;
             }
         }
-    }, [error]);
+    }, [error, lockoutSeconds]);
 
     useEffect(() => {
         if (slug) {
@@ -88,9 +96,20 @@ function LoginPage({
 
     /* eslint camelcase: ["error", {ignoreDestructuring: true, allow: ["remember_me"]}] */
     const submit = ({ email, password, remember_me }) => {
-        dispatch({ type: Types.LOGIN_REQUEST, email, password, remember_me });
         setEmail(email);
         setPassword(password);
+        if (lockoutSeconds) {
+            dispatch({
+                type: Types.LOCKOUT_USER
+            });
+        } else {
+            dispatch({
+                type: Types.LOGIN_REQUEST,
+                email,
+                password,
+                remember_me
+            });
+        }
     };
 
     const handleSubmit = e => {
