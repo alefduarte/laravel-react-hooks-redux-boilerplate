@@ -3,7 +3,11 @@
         "profile": "Perfil",
         "settings": "Configurações",
         "logout": "Sair",
-        "language": "Idioma"
+        "language": "Idioma",
+        "expire": "Sua conta não foi verificada e expirará em {{days}} dia. ",
+        "expire_plural": "Sua conta não foi verificada e expirará em {{days}} dias. ",
+        "clickHere": "Clique aqui",
+        "resend": " para reenviar o código de ativação"
     },
     "general": {
         "login": "Entrar",
@@ -13,7 +17,9 @@
         "username": "Usuário",
         "SIGNUP": "REGISTRAR",
         "name": "Nome",
-        "passwordConf": "Confirmar Senha"
+        "passwordConf": "Confirmar Senha",
+        "SEND": "ENVIAR",
+        "error": "Erro"
     },
     "signup": {
         "noPasswordConf": "Confirme a senha!",
@@ -22,7 +28,9 @@
         "noName": "Insira um nome!",
         "noMatch": "As senhas não coincidem!",
         "login": "Faça login",
-        "invalid": "E-mail já cadastrado."
+        "invalid": "E-mail já cadastrado.",
+        "successTitle": "Cadastrado",
+        "successContent": "Usuário cadastrado com sucesso"
     },
     "login": {
         "noUsername": "Insira um nome de usuário",
@@ -52,5 +60,23 @@
     },
     "dashPage": {
         "loggedIn": "Esta é sua Admin Page<br/>Você está logado como {{name}}!"
+    },
+    "activation": {
+        "failedTitle": "A Ativação Falhou",
+        "the_activation_code_has_either": "O código de ativação ",
+        "expired": "expirou",
+        "or_is": " ou é ",
+        "invalid": "inválido",
+        "try_resending_activation_code": "Tente reenviar um novo código de ativação abaixo.",
+        "failedButton": "Reenviar Código de Ativação",
+        "successTitle": "Sua conta foi ativada com sucesso",
+        "home": "Ir para o início"
+    },
+    "resend": {
+        "title": "Enviar Código de Ativação",
+        "successModalTitle": "Código Enviado",
+        "successModalSubTitle": "Código Enviado com sucesso para o e-mail informado. Se você não receber o e-mail de ativação dentro de alguns minutos, verifique sua caixa de spam.",
+        "errorNotFound": "Nenhuma conta foi encontrada com este e-mail. Certifique-se de ter digitado o e-mail correto.",
+        "errorAlreadySent": "Um e-mail de ativação já foi enviado para este e-mail em menos de uma hora. Verifique sua caixa de spam e se o e-mail digitado está correto ou tente novamente depois de uma hora."
     }
 }

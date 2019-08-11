@@ -4,8 +4,10 @@
         "settings": "Settings",
         "logout": "Log out",
         "language": "Language",
-        "expire": "Your account hasn't been verified and will expire in {{days}} day. Click here to resend verification link",
-        "expire_plural": "Your account hasn't been verified and will expire in {{days}} days. Click here to resend verification link"
+        "expire": "Your account hasn't been verified and will expire in {{days}} day. ",
+        "expire_plural": "Your account hasn't been verified and will expire in {{days}} days. ",
+        "clickHere": "Click here",
+        "resend": " to resend the verification code"
     },
     "general": {
         "login": "Log in",
@@ -15,7 +17,9 @@
         "username": "Username",
         "SIGNUP": "SIGNUP",
         "name": "Name",
-        "passwordConf": "Confirm Password"
+        "passwordConf": "Confirm Password",
+        "SEND": "SEND",
+        "error": "Error"
     },
     "signup": {
         "noPasswordConf": "Please confirm your password!",
@@ -24,7 +28,9 @@
         "noName": "Please input your name!",
         "noMatch": "Password do not match!",
         "login": "Log in instead",
-        "invalid": "The email has already been taken."
+        "invalid": "The email has already been taken.",
+        "successTitle": "Registered",
+        "successContent": "Users registered successfully"
     },
     "login": {
         "noUsername": "Please input your username!",
@@ -54,5 +60,23 @@
     },
     "dashPage": {
         "loggedIn": "This is your Admin Screen<br/>You are logged in as {{name}}!"
+    },
+    "activation": {
+        "failedTitle": "Activation Failed",
+        "the_activation_code_has_either": "The activation code has either ",
+        "expired": "expired",
+        "or_is": " or is ",
+        "invalid": "invalid",
+        "try_resending_activation_code": "Try resending the activation code below.",
+        "failedButton": "Resend Activation code",
+        "successTitle": "Your account has been activated successfully",
+        "home": "Go Home"
+    },
+    "resend": {
+        "title": "Send Activation Code",
+        "successModalTitle": "Code Sent",
+        "successModalSubTitle": "Activation code has successfully been sent to the email provided. If you do not received the email activation message within a few minutes, please check you spam folder.",
+        "errorNotFound": "No account was found with the email provided. Check whether the email you have entered is correct.",
+        "errorAlreadySent": "An activation email has already been sent to this email in less than an hour. Check your spam folder and whether email you have entered is correct or try again in an hour."
     }
 }
