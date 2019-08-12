@@ -94,14 +94,14 @@ function RegisterForm({ form }) {
 
     return (
         <Content className="form-content">
-            <Title level={2} style={{ textAlign: "center" }}>
-                {t("general.SIGNUP")}
-            </Title>
             <Form
                 {...formItemLayout}
                 onSubmit={handleSubmit}
                 className="signup-form"
             >
+                <Title level={2} style={{ textAlign: "center" }}>
+                    {t("general.SIGNUP")}
+                </Title>
                 <Form.Item label={t("general.name")}>
                     {getFieldDecorator("name", {
                         rules: [
