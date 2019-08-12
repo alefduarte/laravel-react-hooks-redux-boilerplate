@@ -38,10 +38,10 @@ class PasswordResetController extends Controller
                 'token' => str_random(60)
             ]
         );
-
+        $language = $request->header('accept-language');
         if ($user && $passwordReset)
             $user->notify(
-                new PasswordResetRequest($passwordReset->token)
+                (new PasswordResetRequest($passwordReset->token))->locale($language)
             );
 
         return response()->json([
@@ -111,7 +111,8 @@ class PasswordResetController extends Controller
         $user->password = Hash::make(request('password'));
         $user->save();
         $passwordReset->delete();
-        $user->notify(new PasswordResetSuccess($passwordReset));
+        $language = $request->header('accept-language');
+        $user->notify((new PasswordResetSuccess($passwordReset))->locale($language));
         return response()->json($user);
     }
 }

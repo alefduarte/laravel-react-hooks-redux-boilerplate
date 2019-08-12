@@ -55,7 +55,9 @@ class UserController extends Controller
             'activation_token' => str_random(60)
         ]);
 
-        $user->notify(new SignupActivate($user));
+        $language = $request->header('accept-language');
+
+        $user->notify((new SignupActivate($user))->locale($language));
         $user->activation_sent_at = Carbon::now();
         $user->save();
 
