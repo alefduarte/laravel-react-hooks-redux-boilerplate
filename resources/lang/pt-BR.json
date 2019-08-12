@@ -1,0 +1,16 @@
+{
+    "Confirm your account": "Confirme sua conta",
+    "Thanks for signup! Please before you begin, you must confirm your account.": "Obrigado por cadastrar! Antes de começar, você deve confirmar sua conta.",
+    "Thank you for using our application!": "Obrigado por usar nossa aplicação",
+    "You have changed your password successfully.": "Sua senha foi alterada com sucesso",
+    "If you did not change your password, protect your account.": "Se você não requisitou essa mudança, proteja sua conta",
+    "Reset Password": "Redefina sua Senha",
+    "You are receiving this email because we received a password reset request for your account.": "Você recebeu esse e-mail porque foi solicitado uma redefinição de senha na sua conta.",
+    "If you did not request a password reset, no further action is required.": "Se você não solicitou uma redefinição de senha, nenhuma ação é necessária.",
+    "Password Reset Request": "Solicitação de Redefinição de Senha",
+    "Password Reset Success": "Senha Redefinida com Sucesso",
+    "If you’re having trouble clicking the \":actionText\" button, copy and paste the URL below\ninto your web browser: [:actionURL](:actionURL)": "Se você estiver com problemas para clicar no botão \":actionText\", copie e cole o URL abaixo\nem seu navegador da web: [:actionURL](:actionURL)",
+    "All rights reserved.": "Todos os direitos reservados.",
+    "Regards": "Atenciosamente",
+    "Whoops!": "Ops!"
+}
