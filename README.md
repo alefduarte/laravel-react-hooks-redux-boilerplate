@@ -130,7 +130,7 @@ Inside Tinker CLI, create a user with the desired information by running:
 After everything has been set, start your application by running:
 
 ```sh
-php artisan server
+php artisan serve
 ```
 
 And react by running:
