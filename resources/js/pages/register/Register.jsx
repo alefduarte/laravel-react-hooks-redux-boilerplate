@@ -1,5 +1,5 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { useState, useEffect } from "react";
-import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next";
 import { Form, Input, Button, Layout, Modal, Typography } from "antd";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,10 +10,10 @@ import { tailFormItemLayout, formItemLayout } from "@styles";
 const { Content } = Layout;
 const { Title } = Typography;
 
-function RegisterForm({ form }) {
+function Register() {
     const { t } = useTranslation();
+    const [form] = Form.useForm();
     const [confirmDirty, setConfirmDirty] = useState(false);
-    const { getFieldDecorator } = form;
     const dispatch = useDispatch();
     const isFetching = useSelector(state => state.users.fetching);
     const error = useSelector(state => isError(state));
@@ -54,22 +54,26 @@ function RegisterForm({ form }) {
     }, [saved]);
 
     /* eslint camelcase: ["error", {ignoreDestructuring: true, allow: ["password_confirmation"]}] */
-    const handleSubmit = e => {
-        e.preventDefault();
-        form.validateFieldsAndScroll(
-            (err, { email, name, password, password_confirmation }) => {
-                if (!err) {
-                    dispatch({
-                        type: Types.STORE_USER,
-                        email,
-                        name,
-                        password,
-                        password_confirmation
-                    });
-                    setEmail(email);
-                }
-            }
-        );
+    const onFinish = ({ name, email, password, password_confirmation }) => {
+        dispatch({
+            type: Types.STORE_USER,
+            email,
+            name,
+            password,
+            password_confirmation,
+        });
+        setEmail(email);
+    };
+
+    const passwordLen = (_, value) => {
+        if (value && value.length > 5) {
+            return Promise.resolve();
+        }
+        return Promise.reject(t('signup.passwordLen'));
+    };
+
+    const onFinishFailed = ({ errorFields }) => {
+        form.scrollToField(errorFields[0].name);
     };
 
     const handleConfirmBlur = e => {
@@ -77,86 +81,87 @@ function RegisterForm({ form }) {
         setConfirmDirty(confirmDirty || !!value);
     };
 
-    const compareToFirstPassword = (rule, value, callback) => {
-        if (value && value !== form.getFieldValue("password")) {
-            callback(t("signup.noMatch"));
-        } else {
-            callback();
-        }
-    };
-
-    const validateToNextPassword = (rule, value, callback) => {
-        if (value && confirmDirty) {
-            form.validateFields(["confirm"], { force: true });
-        }
-        callback();
-    };
-
     return (
         <Content className="form-content">
             <Form
                 {...formItemLayout}
-                onSubmit={handleSubmit}
+                form={form}
+                onFinish={onFinish}
+                onFinishFailed={onFinishFailed}
                 className="signup-form"
             >
                 <Title level={2} style={{ textAlign: "center" }}>
                     {t("general.SIGNUP")}
                 </Title>
-                <Form.Item label={t("general.name")}>
-                    {getFieldDecorator("name", {
-                        rules: [
-                            {
-                                required: true,
-                                message: t("signup.noName"),
-                                whitespace: true
-                            }
-                        ]
-                    })(<Input autoComplete="name" />)}
+                <Form.Item
+                    label={t('general.name')}
+                    name="name"
+                    rules={[
+                        {
+                            required: true,
+                            message: t('signup.noName'),
+                            whitespace: true,
+                        },
+                    ]}
+                >
+                    <Input autoComplete="name" />
                 </Form.Item>
-                <Form.Item label="E-mail">
-                    {getFieldDecorator("email", {
-                        rules: [
-                            {
-                                type: "email",
-                                message: t("signup.invalidEmail")
-                            },
-                            {
-                                required: true,
-                                message: t("signup.noEmail")
-                            }
-                        ]
-                    })(<Input autoComplete="username email" />)}
+                <Form.Item
+                    label="E-mail"
+                    name="email"
+                    rules={[
+                        {
+                            type: 'email',
+                            message: t('signup.invalidEmail'),
+                        },
+                        {
+                            required: true,
+                            message: t('signup.noEmail'),
+                        },
+                    ]}
+                >
+                    <Input autoComplete="username email" />
                 </Form.Item>
-                <Form.Item label={t("general.password")} hasFeedback>
-                    {getFieldDecorator("password", {
-                        rules: [
-                            {
-                                required: true,
-                                message: t("login.noPassword")
-                            },
-                            {
-                                validator: validateToNextPassword
-                            }
-                        ]
-                    })(<Input.Password autoComplete="new-password" />)}
+                <Form.Item
+                    label={t('general.password')}
+                    hasFeedback
+                    name="password"
+                    rules={[
+                        {
+                            required: true,
+                            message: t('login.noPassword'),
+                        },
+                        {
+                            validator: passwordLen,
+                        },
+                    ]}
+                >
+                    <Input.Password autoComplete="new-password" />
                 </Form.Item>
-                <Form.Item label={t("general.passwordConf")} hasFeedback>
-                    {getFieldDecorator("password_confirmation", {
-                        rules: [
-                            {
-                                required: true,
-                                message: t("signup.noPasswordConf")
+                <Form.Item
+                    label={t('general.passwordConf')}
+                    hasFeedback
+                    name="password_confirmation"
+                    dependencies={['password']}
+                    rules={[
+                        {
+                            required: true,
+                            message: t('signup.noPasswordConf'),
+                        },
+                        ({ getFieldValue }) => ({
+                            validator(_, value) {
+                                if (!value || getFieldValue('password') === value) {
+                                    return Promise.resolve();
+                                }
+                                return Promise.reject(t('signup.noMatch'));
                             },
-                            {
-                                validator: compareToFirstPassword
-                            }
-                        ]
-                    })(
-                        <Input.Password
-                            onBlur={handleConfirmBlur}
-                            autoComplete="new-password"
-                        />
-                    )}
+                        }),
+                    ]}
+                >
+                    <Input.Password
+                        onBlur={handleConfirmBlur}
+                        autoComplete="new-password"
+                    />
                 </Form.Item>
                 <Form.Item {...tailFormItemLayout}>
                     <Button
@@ -187,17 +192,5 @@ function RegisterForm({ form }) {
         </Content>
     );
 }
-
-RegisterForm.propTypes = {
-    form: PropTypes.shape({
-        getFieldDecorator: PropTypes.func.isRequired,
-        validateFieldsAndScroll: PropTypes.func.isRequired,
-        getFieldValue: PropTypes.func.isRequired,
-        setFields: PropTypes.func.isRequired,
-        validateFields: PropTypes.func.isRequired
-    }).isRequired
-};
-
-const Register = Form.create({ name: "register" })(RegisterForm);
 
 export default Register;

@@ -2,7 +2,19 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { useTranslation, Trans } from "react-i18next";
-import { Menu, Dropdown, Icon, Avatar, Button, Tooltip, Layout } from "antd";
+import {
+    BellOutlined,
+    DownOutlined,
+    GlobalOutlined,
+    HomeOutlined,
+    LoginOutlined,
+    LogoutOutlined,
+    QuestionCircleOutlined,
+    SettingOutlined,
+    UserAddOutlined,
+    UserOutlined,
+} from '@ant-design/icons';
+import { Menu, Dropdown, Avatar, Button, Tooltip, Layout } from "antd";
 import { isLoggedIn, isAdmin, expiresAt, isActive } from "@ducks/auth";
 import history from "@routes/history";
 
@@ -28,17 +40,17 @@ function Navbar() {
     const menu = (
         <Menu>
             <Menu.Item key="0">
-                <Icon type="user" />
+                <UserOutlined />
                 {t("navbar.profile")}
             </Menu.Item>
             <Menu.Item key="1">
-                <Icon type="setting" />
+                <SettingOutlined />
                 {t("navbar.settings")}
             </Menu.Item>
             <Menu.Divider />
             <Menu.Item key="2">
                 <Link to="/logout">
-                    <Icon type="logout" />
+                    <LogoutOutlined />
                     <span style={{ margin: "10px" }}>{t("navbar.logout")}</span>
                 </Link>
             </Menu.Item>
@@ -72,7 +84,7 @@ function Navbar() {
                     className="header-menu-button"
                     size="large"
                     type="link"
-                    icon="home"
+                    icon={<HomeOutlined />}
                     aria-label="start"
                     style={{ width: "40px" }}
                     onClick={() =>
@@ -91,14 +103,14 @@ function Navbar() {
                                     className="header-menu-button"
                                     size="large"
                                     type="link"
-                                    icon="question-circle"
+                                    icon={<QuestionCircleOutlined />}
                                 />
                             </Tooltip>
                             <Button
                                 className="header-menu-button"
                                 size="large"
                                 type="link"
-                                icon="bell"
+                                icon={<BellOutlined />}
                             />
                             <Dropdown overlay={menu}>
                                 <span
@@ -118,36 +130,36 @@ function Navbar() {
                                     <p className="header-username">
                                         {username}
                                     </p>
-                                    <Icon type="down" />
+                                    <DownOutlined />
                                 </span>
                             </Dropdown>
                         </>
                     ) : (
-                        <>
-                            <Button
-                                className="header-menu-button"
-                                type="link"
-                                icon="login"
-                                onClick={() => history.push("/login")}
-                            >
-                                {t("general.login")}
-                            </Button>
-                            <Button
-                                className="header-menu-button"
-                                type="link"
-                                icon="user-add"
-                                onClick={() => history.push("/register")}
-                            >
-                                {t("general.signup")}
-                            </Button>
-                        </>
-                    )}
+                            <>
+                                <Button
+                                    className="header-menu-button"
+                                    type="link"
+                                    icon={<LoginOutlined />}
+                                    onClick={() => history.push("/login")}
+                                >
+                                    {t("general.login")}
+                                </Button>
+                                <Button
+                                    className="header-menu-button"
+                                    type="link"
+                                    icon={<UserAddOutlined />}
+                                    onClick={() => history.push("/register")}
+                                >
+                                    {t("general.signup")}
+                                </Button>
+                            </>
+                        )}
                     <Dropdown overlay={languageMenu} trigger={["click"]}>
                         <Button
                             className="header-menu-button"
                             size="large"
                             type="link"
-                            icon="global"
+                            icon={<GlobalOutlined />}
                             aria-label="home"
                         />
                     </Dropdown>

@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
-import PropTypes from "prop-types";
-import { Result, Icon, Button, Spin, Typography } from "antd";
+import { useParams } from 'react-router-dom';
+import { SmileTwoTone } from '@ant-design/icons';
+import { Result, Button, Spin, Typography } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { isError, isActive, Types } from "@ducks/activate";
@@ -9,12 +10,9 @@ import history from "@routes/history";
 
 const { Paragraph, Text } = Typography;
 
-function ActivateAccount({
-    match: {
-        params: { slug }
-    }
-}) {
+function ActivateAccount() {
     const { t } = useTranslation();
+    const { slug } = useParams();
     const dispatch = useDispatch();
     const isAuthenticated = useSelector(state => isLoggedIn(state));
     const isFetching = useSelector(state => state.activate.fetching);
@@ -71,7 +69,7 @@ function ActivateAccount({
             )}
             {active && (
                 <Result
-                    icon={<Icon type="smile" theme="twoTone" />}
+                    icon={<SmileTwoTone />}
                     title={t("activation.successTitle")}
                     extra={
                         <Button
@@ -86,13 +84,5 @@ function ActivateAccount({
         </Spin>
     );
 }
-
-ActivateAccount.propTypes = {
-    match: PropTypes.shape({
-        params: PropTypes.shape({
-            slug: PropTypes.string
-        })
-    }).isRequired
-};
 
 export default ActivateAccount;

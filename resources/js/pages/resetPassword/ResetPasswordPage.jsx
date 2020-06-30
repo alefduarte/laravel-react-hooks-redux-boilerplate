@@ -1,5 +1,6 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
+import { useParams } from 'react-router-dom';
 import { Form, Input, Button, Layout, Typography } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
@@ -9,15 +10,11 @@ import { tailFormItemLayout, formItemLayout } from "@styles";
 const { Content } = Layout;
 const { Title } = Typography;
 
-function ResetPassword({
-    form,
-    match: {
-        params: { slug }
-    }
-}) {
+function ResetPasswordPage() {
     const { t } = useTranslation();
     const [confirmDirty, setConfirmDirty] = useState(false);
-    const { getFieldDecorator } = form;
+    const { slug } = useParams();
+    const [form] = Form.useForm();
     const dispatch = useDispatch();
     const isFetching = useSelector(state => state.password.fetching);
     const error = useSelector(state => isError(state));
@@ -26,12 +23,13 @@ function ResetPassword({
 
     useEffect(() => {
         function handleError() {
-            form.setFields({
-                email: {
+            form.setFields([
+                {
+                    name: ['email'],
                     value: currentEmail,
-                    errors: [new Error(t("login.invalid"))]
-                }
-            });
+                    errors: [t("login.invalid")],
+                },
+            ]);
         }
         if (error) {
             handleError();
@@ -45,24 +43,22 @@ function ResetPassword({
     }, []);
 
     /* eslint camelcase: ["error", {ignoreDestructuring: true, allow: ["password_confirmation"]}] */
-    const submit = ({ email, password, password_confirmation }) => {
+    const onFinish = ({ email, password, password_confirmation }) => {
         dispatch({
             type: Types.RESET_REQUEST,
             email,
             password,
             password_confirmation,
-            token
+            token,
         });
         setEmail(email);
     };
 
-    const handleSubmit = e => {
-        e.preventDefault();
-        form.validateFields((err, values) => {
-            if (!err) {
-                submit(values);
-            }
-        });
+    const passwordLen = (_, value) => {
+        if (value && value.length > 5) {
+            return Promise.resolve();
+        }
+        return Promise.reject(t('signup.passwordLen'));
     };
 
     const handleConfirmBlur = e => {
@@ -70,19 +66,8 @@ function ResetPassword({
         setConfirmDirty(confirmDirty || !!value);
     };
 
-    const compareToFirstPassword = (rule, value, callback) => {
-        if (value && value !== form.getFieldValue("password")) {
-            callback(t("signup.noMatch"));
-        } else {
-            callback();
-        }
-    };
-
-    const validateToNextPassword = (rule, value, callback) => {
-        if (value && confirmDirty) {
-            form.validateFields(["confirm"], { force: true });
-        }
-        callback();
+    const onFinishFailed = ({ errorFields }) => {
+        form.scrollToField(errorFields[0].name);
     };
 
     return (
@@ -92,53 +77,66 @@ function ResetPassword({
             </Title>
             <Form
                 {...formItemLayout}
-                onSubmit={handleSubmit}
+                onFinish={onFinish}
+                onFinishFailed={onFinishFailed}
                 className="signup-form"
             >
-                <Form.Item label="E-mail">
-                    {getFieldDecorator("email", {
-                        rules: [
-                            {
-                                type: "email",
-                                message: t("signup.invalidEmail")
-                            },
-                            {
-                                required: true,
-                                message: t("signup.noEmail")
-                            }
-                        ]
-                    })(<Input autoComplete="username email" />)}
+                <Form.Item
+                    label="E-mail"
+                    name="email"
+                    rules={[
+                        {
+                            type: 'email',
+                            message: t('signup.invalidEmail'),
+                        },
+                        {
+                            required: true,
+                            message: t('signup.noEmail'),
+                        },
+                    ]}
+                >
+                    <Input autoComplete="username email" />
                 </Form.Item>
-                <Form.Item label={t("reset.newPass")} hasFeedback>
-                    {getFieldDecorator("password", {
-                        rules: [
-                            {
-                                required: true,
-                                message: t("login.noPassword")
-                            },
-                            {
-                                validator: validateToNextPassword
-                            }
-                        ]
-                    })(<Input.Password autoComplete="new-password" />)}
+                <Form.Item
+                    label={t('reset.newPass')}
+                    hasFeedback
+                    name="password"
+                    rules={[
+                        {
+                            required: true,
+                            message: t('login.noPassword'),
+                        },
+                        {
+                            validator: passwordLen,
+                        },
+                    ]}
+                >
+                    <Input.Password autoComplete="new-password" />
                 </Form.Item>
-                <Form.Item label={t("reset.confPass")} hasFeedback>
-                    {getFieldDecorator("password_confirmation", {
-                        rules: [
-                            {
-                                required: true,
-                                message: t("signup.noPasswordConf")
+                <Form.Item
+                    label={t('reset.confPass')}
+                    name="password_confirmation"
+                    dependencies={['password']}
+                    rules={[
+                        {
+                            required: true,
+                            message: t('signup.noPasswordConf'),
+                        },
+                        ({ getFieldValue }) => ({
+                            validator(_, value) {
+                                if (!value || getFieldValue('password') === value) {
+                                    return Promise.resolve();
+                                }
+                                return Promise.reject(t('signup.noMatch'));
                             },
-                            {
-                                validator: compareToFirstPassword
-                            }
-                        ]
-                    })(
-                        <Input.Password
-                            onBlur={handleConfirmBlur}
-                            autoComplete="new-password"
-                        />
-                    )}
+                        }),
+                    ]}
+                    hasFeedback
+                >
+                    <Input.Password
+                        onBlur={handleConfirmBlur}
+                        autoComplete="new-password"
+                    />
                 </Form.Item>
                 <Form.Item {...tailFormItemLayout}>
                     <Button
@@ -154,21 +152,5 @@ function ResetPassword({
         </Content>
     );
 }
-
-ResetPassword.propTypes = {
-    form: PropTypes.shape({
-        getFieldDecorator: PropTypes.func.isRequired,
-        setFields: PropTypes.func.isRequired,
-        getFieldValue: PropTypes.func.isRequired,
-        validateFields: PropTypes.func.isRequired
-    }).isRequired,
-    match: PropTypes.shape({
-        params: PropTypes.shape({
-            slug: PropTypes.string
-        })
-    }).isRequired
-};
-
-const ResetPasswordPage = Form.create({ name: "reset_page" })(ResetPassword);
 
 export default ResetPasswordPage;

@@ -1,5 +1,6 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect } from "react";
-import PropTypes from "prop-types";
+import { useParams } from 'react-router-dom';
 import { Form, Input, Button, Layout, Typography, Modal } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { useTranslation, Trans } from "react-i18next";
@@ -9,29 +10,15 @@ import { tailFormItemLayout, formItemLayout } from "@styles";
 const { Content } = Layout;
 const { Title } = Typography;
 
-function SendActivation({
-    form,
-    match: {
-        params: { slug }
-    }
-}) {
+function SendActivationPage() {
     const { t } = useTranslation();
-    const { getFieldDecorator } = form;
+    const { slug } = useParams();
+    const [form] = Form.useForm();
     const dispatch = useDispatch();
     const isFetching = useSelector(state => state.activate.fetching);
     const errorStatus = useSelector(state => state.activate.error);
     const error = useSelector(state => isError(state));
     const sent = useSelector(state => isSent(state));
-
-    useEffect(() => {
-        if (slug) {
-            form.setFields({
-                email: {
-                    value: decodeURIComponent(slug)
-                }
-            });
-        }
-    }, []);
 
     useEffect(() => {
         function handleSuccess() {
@@ -86,23 +73,25 @@ function SendActivation({
                 {t("resend.title")}
             </Title>
             <Form
+                form={form}
                 {...formItemLayout}
-                onSubmit={handleSubmit}
+                onFinish={handleSubmit}
+                initialValues={{ email: decodeURIComponent(slug) }}
                 className="login-form"
             >
-                <Form.Item label="E-mail">
-                    {getFieldDecorator("email", {
-                        rules: [
-                            {
-                                type: "email",
-                                message: t("signup.invalidEmail")
-                            },
-                            {
-                                required: true,
-                                message: t("signup.noEmail")
-                            }
-                        ]
-                    })(<Input autoComplete="username email" />)}
+                <Form.Item name="email" label="E-mail"
+                    rules={[
+                        {
+                            type: "email",
+                            message: t("signup.invalidEmail")
+                        },
+                        {
+                            required: true,
+                            message: t("signup.noEmail")
+                        }
+                    ]}
+                >
+                    <Input autoComplete="username email" />
                 </Form.Item>
                 <Form.Item {...tailFormItemLayout}>
                     <Button
@@ -118,22 +107,5 @@ function SendActivation({
         </Content>
     );
 }
-
-SendActivation.propTypes = {
-    form: PropTypes.shape({
-        getFieldDecorator: PropTypes.func.isRequired,
-        setFields: PropTypes.func.isRequired,
-        validateFields: PropTypes.func.isRequired
-    }).isRequired,
-    match: PropTypes.shape({
-        params: PropTypes.shape({
-            slug: PropTypes.string
-        })
-    }).isRequired
-};
-
-const SendActivationPage = Form.create({ name: "activation_page" })(
-    SendActivation
-);
 
 export default SendActivationPage;

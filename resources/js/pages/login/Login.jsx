@@ -1,15 +1,7 @@
 import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import {
-    Form,
-    Icon,
-    Input,
-    Button,
-    Modal,
-    Checkbox,
-    Layout,
-    Typography
-} from "antd";
+import { useParams } from 'react-router-dom';
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { Form, Input, Button, Modal, Checkbox, Layout, Typography } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { Trans, useTranslation } from "react-i18next";
 import { lockedSeconds, isError, Types } from "@ducks/auth";
@@ -18,14 +10,10 @@ import history from "@routes/history";
 const { Content } = Layout;
 const { Title, Text } = Typography;
 
-function LoginPage({
-    form,
-    match: {
-        params: { slug }
-    }
-}) {
+function Login() {
     const { t } = useTranslation();
-    const { getFieldDecorator } = form;
+    const { slug } = useParams();
+    const [form] = Form.useForm();
     const dispatch = useDispatch();
     const isFetching = useSelector(state => state.auth.fetching);
     const errorStatus = useSelector(state => state.auth.error);
@@ -36,16 +24,18 @@ function LoginPage({
 
     useEffect(() => {
         function handleError(message) {
-            form.setFields({
-                password: {
+            form.setFields([
+                {
+                    name: ['password'],
                     value: currentPassword,
-                    errors: [new Error(message)]
+                    errors: [message],
                 },
-                email: {
+                {
+                    name: ['email'],
                     value: currentEmail,
-                    errors: [new Error(message)]
-                }
-            });
+                    errors: [message],
+                },
+            ]);
         }
 
         function handleExpiredError() {
@@ -112,13 +102,8 @@ function LoginPage({
         }
     };
 
-    const handleSubmit = e => {
-        e.preventDefault();
-        form.validateFields((err, values) => {
-            if (!err) {
-                submit(values);
-            }
-        });
+    const onFinish = values => {
+        submit(values);
     };
 
     return (
@@ -126,55 +111,50 @@ function LoginPage({
             <Title level={2} style={{ textAlign: "center" }}>
                 {t("general.LOGIN")}
             </Title>
-            <Form onSubmit={handleSubmit} className="login-form">
-                <Form.Item>
-                    {getFieldDecorator("email", {
-                        rules: [
-                            {
-                                required: true,
-                                message: t("login.noUsername")
-                            }
-                        ]
-                    })(
-                        <Input
-                            prefix={
-                                <Icon
-                                    type="user"
-                                    style={{ color: "rgba(0,0,0,.25)" }}
-                                />
-                            }
-                            placeholder={t("general.username")}
-                            autoComplete="username"
-                        />
-                    )}
+            <Form form={form} onFinish={onFinish} className="login-form">
+                <Form.Item
+                    name="email"
+                    rules={[
+                        {
+                            type: 'email',
+                            message: t('signup.invalidEmail'),
+                        },
+                        {
+                            required: true,
+                            message: t('login.noUsername'),
+                        },
+                    ]}
+                >
+                    <Input
+                        prefix={
+                            <UserOutlined style={{ color: "rgba(0,0,0,.25)" }} />
+                        }
+                        placeholder={t("general.username")}
+                        autoComplete="username"
+                    />
+                </Form.Item>
+                <Form.Item
+                    name="password"
+                    rules={[
+                        {
+                            required: true,
+                            message: t('login.noPassword'),
+                        },
+                    ]}>
+                    <Input
+                        prefix={
+                            <LockOutlined style={{ color: "rgba(0,0,0,.25)" }} />
+                        }
+                        type="password"
+                        placeholder={t("general.password")}
+                        autoComplete="current-password"
+                        allowClear
+                    />
                 </Form.Item>
                 <Form.Item>
-                    {getFieldDecorator("password", {
-                        rules: [
-                            {
-                                required: true,
-                                message: t("login.noPassword")
-                            }
-                        ]
-                    })(
-                        <Input
-                            prefix={
-                                <Icon
-                                    type="lock"
-                                    style={{ color: "rgba(0,0,0,.25)" }}
-                                />
-                            }
-                            type="password"
-                            placeholder={t("general.password")}
-                            autoComplete="current-password"
-                        />
-                    )}
-                </Form.Item>
-                <Form.Item>
-                    {getFieldDecorator("remember_me", {
-                        valuePropName: "checked",
-                        initialValue: true
-                    })(<Checkbox>{t("login.remember")}</Checkbox>)}
+                    <Form.Item valuePropName="checked" initialValue="true" noStyle>
+                        <Checkbox>{t('login.remember')}</Checkbox>
+                    </Form.Item>
                     <Button
                         type="link"
                         onClick={() =>
@@ -186,7 +166,8 @@ function LoginPage({
                     >
                         {t("login.forgotPassword")}
                     </Button>
-                    <br />
+                </Form.Item>
+                <Form.Item>
                     <Button
                         type="primary"
                         htmlType="submit"
@@ -197,6 +178,7 @@ function LoginPage({
                     </Button>
                     {t("login.or")}
                     <Button
+                        className="no-padding"
                         type="link"
                         onClick={() => history.push("/register")}
                     >
@@ -207,20 +189,5 @@ function LoginPage({
         </Content>
     );
 }
-
-LoginPage.propTypes = {
-    form: PropTypes.shape({
-        getFieldDecorator: PropTypes.func.isRequired,
-        setFields: PropTypes.func.isRequired,
-        validateFields: PropTypes.func.isRequired
-    }).isRequired,
-    match: PropTypes.shape({
-        params: PropTypes.shape({
-            slug: PropTypes.string
-        })
-    }).isRequired
-};
-
-const Login = Form.create({ name: "login_page" })(LoginPage);
 
 export default Login;

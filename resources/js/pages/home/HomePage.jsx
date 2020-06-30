@@ -1,5 +1,6 @@
 import React from "react";
-import { Result, Icon } from "antd";
+import { CheckCircleTwoTone } from '@ant-design/icons';
+import { Result } from "antd";
 import { Trans, useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 
@@ -10,11 +11,7 @@ const HomePage = () => {
         <Result
             className="pulseIcon"
             icon={
-                <Icon
-                    type="check-circle"
-                    theme="twoTone"
-                    twoToneColor="#52c41a"
-                />
+                <CheckCircleTwoTone twoToneColor="#52c41a" />
             }
             title={
                 <>
@@ -24,12 +21,7 @@ const HomePage = () => {
                     >
                         {t("homePage.loggedIn")}
                     </Trans>
-                    <Icon
-                        style={{ paddingLeft: "5px" }}
-                        type="check-circle"
-                        theme="twoTone"
-                        twoToneColor="#52c41a"
-                    />
+                    <CheckCircleTwoTone style={{ paddingLeft: "5px" }} twoToneColor="#52c41a" />
                 </>
             }
         />

@@ -1,5 +1,6 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect } from "react";
-import PropTypes from "prop-types";
+import { useParams } from 'react-router-dom';
 import { Form, Input, Button, Layout, Typography, Modal } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { Trans, useTranslation } from "react-i18next";
@@ -9,14 +10,10 @@ import { tailFormItemLayout, formItemLayout } from "@styles";
 const { Content } = Layout;
 const { Title, Text } = Typography;
 
-function LostPassword({
-    form,
-    match: {
-        params: { slug }
-    }
-}) {
+function LostPasswordPage() {
     const { t } = useTranslation();
-    const { getFieldDecorator } = form;
+    const { slug } = useParams();
+    const [form] = Form.useForm();
     const dispatch = useDispatch();
     const isFetching = useSelector(state => state.password.fetching);
 
@@ -38,22 +35,13 @@ function LostPassword({
                     <Text>{t("reset.modal")}</Text>
                 </Trans>
             ),
-            onOk() {}
+            onOk() { }
         });
     }
 
-    const submit = ({ email }) => {
+    const onFinish = ({ email }) => {
         dispatch({ type: Types.TOKEN_REQUEST, email });
         info();
-    };
-
-    const handleSubmit = e => {
-        e.preventDefault();
-        form.validateFields((err, values) => {
-            if (!err) {
-                submit(values);
-            }
-        });
     };
 
     return (
@@ -63,22 +51,25 @@ function LostPassword({
             </Title>
             <Form
                 {...formItemLayout}
-                onSubmit={handleSubmit}
+                form={form}
+                onFinish={onFinish}
                 className="login-form"
             >
-                <Form.Item label="E-mail">
-                    {getFieldDecorator("email", {
-                        rules: [
-                            {
-                                type: "email",
-                                message: t("signup.invalidEmail")
-                            },
-                            {
-                                required: true,
-                                message: t("signup.noEmail")
-                            }
-                        ]
-                    })(<Input autoComplete="username email" />)}
+                <Form.Item
+                    label="E-mail"
+                    name="email"
+                    rules={[
+                        {
+                            type: 'email',
+                            message: t('signup.invalidEmail'),
+                        },
+                        {
+                            required: true,
+                            message: t('signup.noEmail'),
+                        },
+                    ]}
+                >
+                    <Input autoComplete="username email" />
                 </Form.Item>
                 <Form.Item {...tailFormItemLayout}>
                     <Button
@@ -94,20 +85,5 @@ function LostPassword({
         </Content>
     );
 }
-
-LostPassword.propTypes = {
-    form: PropTypes.shape({
-        getFieldDecorator: PropTypes.func.isRequired,
-        setFields: PropTypes.func.isRequired,
-        validateFields: PropTypes.func.isRequired
-    }).isRequired,
-    match: PropTypes.shape({
-        params: PropTypes.shape({
-            slug: PropTypes.string
-        })
-    }).isRequired
-};
-
-const LostPasswordPage = Form.create({ name: "lost_password_page" })(LostPassword);
 
 export default LostPasswordPage;

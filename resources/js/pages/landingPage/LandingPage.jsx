@@ -1,7 +1,8 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Trans, useTranslation } from "react-i18next";
-import { Result, Icon } from "antd";
+import { CheckCircleTwoTone, ExclamationCircleTwoTone } from '@ant-design/icons';
+import { Result } from "antd";
 import { isLoggedIn } from "@ducks/auth";
 
 const LandingPage = () => {
@@ -15,11 +16,7 @@ const LandingPage = () => {
         <Result
             className="pulseIcon"
             icon={
-                <Icon
-                    type="check-circle"
-                    theme="twoTone"
-                    twoToneColor="#52c41a"
-                />
+                <CheckCircleTwoTone twoToneColor="#52c41a" />
             }
             title={
                 <>
@@ -33,24 +30,14 @@ const LandingPage = () => {
                             >
                                 {t("landingPage.loggedIn")}
                             </Trans>
-                            <Icon
-                                style={{ paddingLeft: "5px" }}
-                                type="check-circle"
-                                theme="twoTone"
-                                twoToneColor="#52c41a"
-                            />
+                            <CheckCircleTwoTone style={{ paddingLeft: "5px" }} twoToneColor="#52c41a" />
                         </>
                     ) : (
-                        <>
-                            {t("landingPage.notLoggedIn")}
-                            <Icon
-                                style={{ paddingLeft: "5px" }}
-                                type="exclamation-circle"
-                                theme="twoTone"
-                                twoToneColor="#ff935c"
-                            />
-                        </>
-                    )}
+                            <>
+                                {t("landingPage.notLoggedIn")}
+                                <ExclamationCircleTwoTone style={{ paddingLeft: "5px" }} twoToneColor="#ff935c" />
+                            </>
+                        )}
                 </>
             }
         />
