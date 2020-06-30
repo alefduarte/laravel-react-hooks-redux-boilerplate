@@ -1,6 +1,6 @@
 # laravel-react-hooks-redux-boilerplate
 
-Boilerplate for Laravel 5.8 using React 16.8.6 with Hooks, Redux Saga, Jest, Ant-Design, reduxsauce with duck pattern, implemented internationalization with i18next and using eslint 5.16 with airbnb style and using PropTypes. Using Laravel Passport for authentication. Implemented internationalization with Translation Strings in Laravel for en and pt-BR.
+Boilerplate for Laravel 5.8 using React 16.12.0 with Hooks, Redux Saga, Jest, Ant-Design, reduxsauce with duck pattern, implemented internationalization with i18next and using eslint 7.3.1 with airbnb style and using PropTypes. Using Laravel Passport for authentication. Implemented internationalization with Translation Strings in Laravel for en and pt-BR.
 
 ## Getting Started
 
@@ -168,6 +168,7 @@ yarn watch
 | ----------------------------------- | ------------------------------------------------------------------------------- |
 | @babel/preset-react                 | Babel preset for all React plugins                                              |
 | antd                                | An enterprise-class UI design language and React implementation.                |
+| @ant-design/icons                                | Set of icons for antd ^4V.                |
 | axios                               | Promise based HTTP client for the browser and node.js                           |
 | babel-core                          | Babel compiler core.                                                            |
 | babel-eslint                        | Allows using types or experimental features not supported in ESLint itself      |
@@ -183,7 +184,7 @@ yarn watch
 | history                             | Manage session history                                                          |
 | i18next                             | I18next internationalization framework                                          |
 | i18next-browser-languagedetector    | Language detector used in browser environment for i18next                       |
-| i18next-xhr-backend                 | Backend layer for i18next using browsers xhr                                    |
+| i18next-http-backend                 | Backend layer for i18next using browsers http                                    |
 | jest                                | JavaScript Testing Library                                                      |
 | jquery                              | JavaScript library for DOM operations                                           |
 | laravel-mix                         | API for defining basic webpack build steps for Laravel application              |
