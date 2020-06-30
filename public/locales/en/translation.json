@@ -24,6 +24,7 @@
     },
     "signup": {
         "noPasswordConf": "Please confirm your password!",
+        "passwordLen": "Passwords must be at least 6 characters in length",
         "noEmail": "Please input your E-mail!",
         "invalidEmail": "The input is not valid E-mail!",
         "noName": "Please input your name!",

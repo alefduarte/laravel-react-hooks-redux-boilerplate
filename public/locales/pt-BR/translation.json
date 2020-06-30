@@ -24,6 +24,7 @@
     },
     "signup": {
         "noPasswordConf": "Confirme a senha!",
+        "passwordLen": "A senha deve conter ao menos 6 caracteres",
         "noEmail": "Insira um e-mail!",
         "invalidEmail": "E-mail inválido!",
         "noName": "Insira um nome!",
@@ -35,7 +36,6 @@
     },
     "error": {
         "500": "Erro Interno do Servidor. Por favor contate o Administrador!"
-        
     },
     "login": {
         "noUsername": "Insira um nome de usuário",
