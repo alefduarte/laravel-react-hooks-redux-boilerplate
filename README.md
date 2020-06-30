@@ -35,7 +35,8 @@ yarn
 
 ---
 
-Before starting, rename your .env.example file to .env.\
+Before starting, rename your `.env.example` file to `.env`.
+
 Run the following command to create the APP_KEY which will be used for encryption.
 
 ```sh
@@ -67,13 +68,27 @@ After the tables have been created, you must run `passport:install` to create th
 php artisan passport:install
 ```
 
-Passport will create the required tables for authentication. In your database, find the table `oauth_clients`, and the row 2, with name "Laravel Password Grant Client", copy the secret token to the row MIX_API_CLIENT_SECRET in the .env file. The MIX_API information should look like below:
+This command will output the following result
+
+```sh
+Encryption keys generated successfully.
+Personal access client created successfully.
+Client ID: 1
+Client secret: {{clientSecret}}
+Password grant client created successfully.
+Client ID: 2
+Client secret: {{clientSecret}}
+```
+
+`{{clientSecret}}` is a 40 characters long string. You must copy it to the .env file.
+
+Passport will also create the  `oauth_clients` table, where the desired token will be stored as "Laravel Password Grant Client", with ID 2. Copy the secret token to the row MIX_API_CLIENT_SECRET in the .env file without quotes. The MIX_API information should look like below:
 
 ```env
 MIX_API_URL="${MIX_BASE_URL}/api"
 MIX_API_CLIENT_ID=2
 MIX_API_GRANT_TYPE="password"
-MIX_API_CLIENT_SECRET="Paste the token here, the other rows should look the same"
+MIX_API_CLIENT_SECRET="Paste the token here, the other rows should look the same, make sure its Client ID 2"
 MIX_API_REFRESH_TOKEN_GRANT_TYPE="refresh_token"
 ```
 
@@ -102,7 +117,7 @@ Run the following command:
 php artisan db:seed
 ```
 
-### Tinker
+### Tinker (Alternative)
 
 You may also create a user using the Tinker command. To enter the Tinker CLI run:
 
